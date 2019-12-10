@@ -1,11 +1,13 @@
 from flask import Flask
+from backend.DBManager import DBmanager
 
 app = Flask(__name__)
+dbtest = DBmanager()
 
 
 @app.route('/', methods=['GET'])
 def hello():
-    return "<h1>Hoi</h1>"
+    return dbtest.lol()
 
 
 @app.route('/test', methods=['GET'])

@@ -10,15 +10,20 @@ import { GestureConfig } from '@angular/material';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     MatSliderModule,
     MatSelectModule,
+    MatInputModule,
 
     BrowserModule,
     AppRoutingModule,

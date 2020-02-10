@@ -42,6 +42,7 @@ def newgast():
 @app.route('/login', methods=['POST'])
 def login():
     """ Logt den Beutzer ein in Session wird ein var auf true gestezt
+        :return 1 wenn erfolgreich 0 wenn nicht
     """
     json = request.get_json()
     if json['password'] == 'password' and json['username'] == 'admin':
@@ -55,7 +56,7 @@ def login():
 @app.route("/logout", methods=['POST'])
 def logout():
     session['logged_in'] = False
-    return 'Ok'
+    return '1'
 
 
 if __name__ == '__main__':

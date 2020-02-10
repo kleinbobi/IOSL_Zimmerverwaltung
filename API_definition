@@ -1,1 +1,22 @@
-/sendPersonen
+# POST #
+
+/sendPersonen : {}
+    Json mit Personen und Zeiten der unterkunft
+
+/login : token ?
+    Login und Authentifikation
+
+
+# GET #
+
+/getFile : File
+    Generiert die Datei mit den Alloggi und den Personen usw
+
+/getTables/stati/{param} : 
+/getTables/comuni/{param} : 
+/getTables/allogiato/{param} : 
+/getTables/documento/{param} : 
+    Daten für die auocomplete dropdowns
+
+/getRooms
+    Json mir den freien und den besetzten Räumen

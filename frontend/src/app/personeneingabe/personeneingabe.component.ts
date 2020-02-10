@@ -11,7 +11,7 @@ export class PersoneneingabeComponent implements OnInit {
   sendobj = {
     from: "2020-02-10",
     to: "2020-02-12",
-    peronen: [
+    personen: [
         {
             name: "Paul",
             surname: "Prünster",

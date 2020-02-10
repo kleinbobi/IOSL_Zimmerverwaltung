@@ -1,15 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template, flash, session
 from flask import request
 from backend.DBManager import DBmanager
-from backend.Person import Person
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 dbtest = DBmanager()
 personenliste = []
-
 @app.route('/', methods=['GET'])
-def hello():
-    return 0
+def home():
+    return render_template('index.html')
+
 
 
 @app.route('/test', methods=['GET'])
@@ -17,24 +18,37 @@ def yeet():
     return "Hoi2"
 
 
-if __name__ == '__main__':
-    app.run()
-
-@app.route("/gast/newgast", methods=['POST'])
-def newGast:
-
-#    average_time = request.form.get('average_time')
-#   choices = request.form.get('choices')
+@app.route('/sendPersonen', methods=['POST'])
+def newgast():
+    print("OK")
+# average_time = request.form.get('average_time')
+# choices = request.form.get('choices')
 
     if request.is_json:
-        print (request.is_json)
+        print(request.is_json)
         json = request.get_json()
-        print (json)
-        
+        print(json)
+# json['name']
+    print(json['personen'][0])
+    return json
+
+# vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
+
+@app.route('login', methods=['POST'])
+""" Logt den Beutzer ein in Session wird ein var auf true gestezt
+"""
+def login:
+    if request.form['password'] == 'password' and request.form['username'] == 'admin':
+        session['logged_in'] = True #Nachfragen ob Sicher!
+        return 1
+    else:
+        return 0
+
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
     return 1
 
-#vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
-
-@app.route("/gast/saveGast", methods=['GET'])
-def saveGast:
-    return 1
+if __name__ == '__main__':
+    app.run(host='127.0.0.1')

@@ -26,7 +26,7 @@ class Person:
 		self.wohnort = wohnort
 
 	def sqlstatment(self, cursor, buchungNr):
-		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,email,wohnland,str,hausnummer,plz,wohnort) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (self.vorname, self.nachname, self.geburtsdatum, self.geburtsort, self.tel, self.email, self.wohnland,self.str, self.hausnummer, self.plz, self.wohnort))
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,buchungNr,email,wohnland,str,hausnummer,plz,wohnort) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (self.vorname, self.nachname, self.geburtsdatum, self.geburtsort, self.tel,buchungNr, self.email, self.wohnland,self.str, self.hausnummer, self.plz, self.wohnort))
 
 	def serialize(self):
 		return {

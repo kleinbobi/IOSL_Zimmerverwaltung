@@ -29,7 +29,7 @@ class DBmanager:
 		print(gid)
 
 		for gast in gastlist:
-			gast.sqlstatment(cursor, 0)
+			gast.sqlstatment(cursor, gid)
 
 		self.db.commit()
 		if cursor.rowcount == 1:
@@ -41,3 +41,13 @@ class DBmanager:
 		cursor.execute("INSERT INTO gruppe(gruppeID) VALUES (NULL)")
 		self.db.commit()
 		return cursor.lastrowid
+
+	def saveJASONGast(self,JSON):
+		cursor = self.db.cursor()
+		gid = self.createGruppe(cursor)
+
+		self.db.commit()
+		if cursor.rowcount == 1:
+			return 1
+		else:
+			return 2

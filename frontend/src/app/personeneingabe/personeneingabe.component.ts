@@ -68,11 +68,7 @@ export class PersoneneingabeComponent implements OnInit {
 
   sendPost() {
     console.log('sent the post');
-<<<<<<< HEAD
     this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
-=======
-    this.api.sendPost('http://127.0.0.1:5000/', this.sendobj).subscribe(data => console.log(data));
->>>>>>> master
   }
 
 }

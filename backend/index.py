@@ -56,7 +56,7 @@ def login():
 @app.route("/logout", methods=['POST'])
 def logout():
     session['logged_in'] = False
-    return 1
+    return 'Ok'
 
 
 if __name__ == '__main__':

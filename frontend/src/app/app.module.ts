@@ -11,6 +11,7 @@ import { GestureConfig } from '@angular/material';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 import { LoginComponent } from './login/login.component';
 import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSliderModule,
     MatSelectModule,
     MatInputModule,
+    MatButtonModule,
 
     BrowserModule,
     AppRoutingModule,

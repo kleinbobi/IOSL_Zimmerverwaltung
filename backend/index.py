@@ -1,11 +1,9 @@
 from flask import Flask, render_template, flash, session
 from flask import request
-from backend.DBManager import DBmanager
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
-dbtest = DBmanager()
 personenliste = []
 @app.route('/', methods=['GET'])
 def home():

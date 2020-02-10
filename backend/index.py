@@ -21,16 +21,24 @@ def yeet():
 
 @app.route('/sendPersonen', methods=['POST'])
 def newgast():
+    """Diese Methode
+
+    :return: Json wenn erfolgreich, -1 wenn SQL fehlgeschlagen, wenn -2 wenn Authentification nicht in session
+    """
     print("OK")
-    if request.is_json:
-        print(request.is_json)
-        json = request.get_json()
-        print(json)
-# json['name']
-    print(json['personen'][0])
-    return json
+    if session['logged_in']:
+        if request.is_json:
+            print(request.is_json)
+            json = request.get_json()
+            print(json)
+        # json['name']
+        print(json['personen'][0])
+        return json
+    else:
+        return -2
 
 # vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -45,10 +53,11 @@ def login():
         return '0'
 
 
-@app.route("/logout")
+@app.route("/logout", methods=['POST'])
 def logout():
     session['logged_in'] = False
     return 1
+
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

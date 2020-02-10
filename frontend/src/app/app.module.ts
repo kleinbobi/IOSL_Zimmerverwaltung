@@ -13,14 +13,19 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 
 import { LoginComponent } from './login/login.component';
+import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    PersoneneingabeComponent
   ],
   imports: [
+    HttpClientModule,
+
     MatSliderModule,
     MatSelectModule,
     MatInputModule,

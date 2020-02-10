@@ -1,43 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>IOSL Verwaltung</title>
-</head>
-<body>
-  <h1>This is a simple material test</h1>
-  <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
-  <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<h1>This is a simple material test</h1>
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
 
+<app-personeneingabe></app-personeneingabe>
 
-  <mat-form-field>
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let f of test" [value]="f">
-        {{f}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <app-login></app-login>
-
-  <!-- <md-event-calendar
-  ng-model="selected"
-  md-events="events"
-  md-event-click="eventClicked($selectedEvent)"
-  md-label="title",
-  md-show-create-link="true"
-  md-create-event-click="eventCreatea($date)"
-  md-create-disabled="true"
-  auto-height=""
-  class="md-primary"
->
-  <md-event-calendar-header class="md-center">
-    <md-event-calendar-prev></md-event-calendar-prev>
-    <md-event-calendar-title></md-event-calendar-title>
-    <md-event-calendar-next></md-event-calendar-next>
-  </md-event-calendar-header>
-</md-event-calendar> -->
-
-</body>
-</html>
+<app-login></app-login>

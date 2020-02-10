@@ -26,15 +26,15 @@ def newGast:
 #    average_time = request.form.get('average_time')
 #   choices = request.form.get('choices')
 
-    forms = request.form
-
-    vorname = request.form.get('vorname')
-    nachname = request.form.get('lastname')
-    geburtsdatum = request.form.get('')
-    geburtsort = request.form.get('')
-    
-
-
+    if request.is_json:
+        print (request.is_json)
+        json = request.get_json()
+        print (json)
+        
     return 1
 
 #vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
+
+@app.route("/gast/saveGast", methods=['GET'])
+def saveGast:
+    return 1

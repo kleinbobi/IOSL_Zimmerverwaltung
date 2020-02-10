@@ -34,12 +34,13 @@ def newgast():
 
 # vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
 
-@app.route('login', methods=['POST'])
-""" Logt den Beutzer ein in Session wird ein var auf true gestezt
-"""
-def login:
+@app.route('/login', methods=['POST'])
+def login():
+    """ Logt den Beutzer ein in Session wird ein var auf true gestezt
+    """
     if request.form['password'] == 'password' and request.form['username'] == 'admin':
         session['logged_in'] = True #Nachfragen ob Sicher!
+        print("eingelogt")
         return 1
     else:
         return 0

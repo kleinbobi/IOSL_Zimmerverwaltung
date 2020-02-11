@@ -11,43 +11,31 @@ class DBmanager:
 	def lol(self):
 		return str(self.dbconnector)
 
-	def safecostemer(self, vorname, nachname, geburtsdatum,):
-
-		cursor = self.db.cursor()
-		cursor.execute("INSERT INTO gast (vorname, nachname) VALUES (%s,%s)", (vorname, nachname))
-		self.db.commit()
-		if cursor.rowcount == 1:
-			return 1
-		else:
-			return 2
-
-	def safeGastArray(self, gastlist=[]):
-		cursor = self.db.cursor()
-
-		gid = self.createGruppe(cursor)
-
-		print(gid)
-
-		for gast in gastlist:
-			gast.sqlstatment(cursor, gid)
-
-		self.db.commit()
-		if cursor.rowcount == 1:
-			return 1
-		else:
-			return 2
 	#Erstellt eine Gruppe für die Buchung
-	def createGruppe(self,cursor):
+	def creategruppe(self,cursor):
+		"""
+		Diese Methode Erstellt eine Gruppe für das Abspeichern der Gäste
+		:param cursor: DBcursor
+		:return: GruppenID
+		"""
 		cursor.execute("INSERT INTO gruppe(gruppeID) VALUES (NULL)")
 		self.db.commit()
 		return cursor.lastrowid
 
-	def saveJASONGast(self,JSON):
+	def saveperson(self, cursor, person, ausweis = 'null'):
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,hausnummer,plz,wohnort) VALUES (%s,%s,%s,%s,%s,,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['email'], self.wohnland, self.str, self.hausnummer, self.plz, self.wohnort))
+		return cursor.lastrowid
+
+	def savejson(self, json):
 		cursor = self.db.cursor()
-		gid = self.createGruppe(cursor)
+		#gid = self.createGruppe(cursor)
+		print(json['to'])
+		print(json['from'])
+		for person in json['personen']:
+			print(person)
 
 		self.db.commit()
 		if cursor.rowcount == 1:
-			return 1
+			return json
 		else:
-			return 2
+			return '-1'

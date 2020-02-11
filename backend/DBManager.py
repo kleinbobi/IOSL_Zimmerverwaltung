@@ -47,34 +47,55 @@ class DBmanager:
 
 	def savejson(self, json):
 		pidlist = []
+		try:
+			cursor = self.db.cursor()
+			gid = self.creategruppe(cursor)
+			print(json['to'])
+			print(json['from'])
+			for person in json['personen']:
 
-		cursor = self.db.cursor()
-		#gid = self.creategruppe(cursor)
-		print(json['to'])
-		print(json['from'])
-		for person in json['personen']:
+				if person['idcardexists'] == 'true':
+					print('000000000K')
+					pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor,person['idcard'])))
+				else:
+					pidlist.append(self.saveperson(cursor, person))
+			print(self.savepersongruppe(cursor, gid, pidlist))
 
-			#if person['idcardexists'] == 'true':
-			print('000000000K')
-				#pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor,person['idcard'])))
-			#else:
-				#pidlist.append(self.saveperson(cursor, person))
-		#print(self.savepersongruppe(cursor, gid, pidlist))
 
-		#self.db.rollback()
-		#self.db.commit()
-		if cursor.rowcount == 1:
-			cursor.close()
-			return json
-		else:
+			self.db.commit()
+			if cursor.rowcount == 1:
+				cursor.close()
+				return json
+			else:
+				cursor.close()
+				return '-1'
+		except mysql.connector.Error as error :
+			print("Failed to update record to database rollback: {}".format(error))
+			self.db.rollback()
 			cursor.close()
 			return '-1'
 
 	def searchcomuni(self, json=None):
+		"""
+		Sucht in der Datanebank nach dem Gemeindan mit dem passenden Namen
+		:param json: Teil des Namens der Gemeinde
+		:return: Liste mit den Gemeinden
+		"""
 		cursor = self.db.cursor()
-		s = "A" + '%'
+		s = json['search'] + '%'
 		cursor.execute("SELECT Descrizione FROM comuni WHERE Descrizione like %s", (s,))
 		myresult = cursor.fetchall()
-		for x in myresult:
-			print(x)
+		return myresult
+
+	def searchstati(self, json=None):
+		"""
+		Sucht in der Datanebank nach dem Gemeindan mit dem passenden Namen
+		:param json: Teil des Namens der Gemeinde
+		:return: Liste mit den Gemeinden
+		"""
+		cursor = self.db.cursor()
+		#s = json['search'] + '%'
+		s = 'A%'
+		cursor.execute("SELECT Descrizione FROM stati WHERE Descrizione like %s", (s,))
+		myresult = cursor.fetchall()
 		return myresult

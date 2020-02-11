@@ -56,6 +56,17 @@ def logout():
     session['logged_in'] = False
     return '1'
 
+@app.route('/getcomuni', methods=['POST'])
+def getcomuni():
+    json = request.get_json()
+    res = database.searchcomuni(json)
+    return json.dumps(res)
+
+@app.route('/getstati', methods=['POST'])
+def getstati():
+    json = request.get_json()
+    res = database.searchstati(json)
+    return json.dumps(res)
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

@@ -8,18 +8,28 @@ import { ApiconnectorService } from '../apiconnector.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private api: ApiconnectorService) { }
+  formuser: string;
+  formpass: string;
 
-  creds = {
-    username: 'admin',
-    password: 'password'
-  };
+  constructor(private api: ApiconnectorService) { }
 
   ngOnInit() {
   }
 
   login() {
-    this.api.sendPost('http://127.0.0.1:5000/login', this.creds).subscribe(data => console.log(data));
+    if (!this.formuser || !this.formpass)
+      return;
+
+    let creds = {
+      username: this.formuser,
+      password: this.formpass
+    };
+
+    this.api.sendPost('http://127.0.0.1:5000/login', creds).subscribe(data => console.log(data));
+  }
+
+  logout() {
+    this.api.sendPost('http://127.0.0.1:5000/logout', {}).subscribe(data => console.log(data));
   }
 
 }

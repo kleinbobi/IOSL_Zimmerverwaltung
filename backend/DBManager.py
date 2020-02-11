@@ -53,11 +53,10 @@ class DBmanager:
 		for person in json['personen']:
 			pidlist.append(self.saveperson(cursor, person))
 		print(self.savepersongruppe(cursor, gid, pidlist))
-		
+
 		self.db.rollback()
 		#self.db.commit()
 		if cursor.rowcount == 1:
-			#self.db.rollback()
 			return json
 		else:
 			return '-1'

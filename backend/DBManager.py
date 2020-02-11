@@ -23,7 +23,6 @@ class DBmanager:
 		:return: GruppenID
 		"""
 		cursor.execute("INSERT INTO gruppe(gruppeID) VALUES (NULL)")
-		self.db.commit()
 		return cursor.lastrowid
 
 	def saveperson(self, cursor, person, ausweis=None):
@@ -38,25 +37,44 @@ class DBmanager:
 		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['birthday'], person['adress'], person['plz'], person['place']))
 		return cursor.lastrowid
 
-	def savepersongruppe(self,cursor,gid,pidlist):
+	def savepersongruppe(self, cursor, gid, pidlist):
 		for pid in pidlist:
 			cursor.execute("INSERT INTO gruppe_gast (gruppeID, gastID) VALUES (%s,%s)", (int(gid), int(pid)))
 
+	def saveausweis(self,cursor,ausweis):
+		cursor.execute("INSERT INTO ausweis (ausweis_nr, typ, land) VALUES (%s,%s,%s)", (ausweis['nr'], ausweis['type'], ausweis['country']))
+		return cursor.lastrowid
 
 	def savejson(self, json):
 		pidlist = []
 
 		cursor = self.db.cursor()
-		gid = self.creategruppe(cursor)
+		#gid = self.creategruppe(cursor)
 		print(json['to'])
 		print(json['from'])
 		for person in json['personen']:
-			pidlist.append(self.saveperson(cursor, person))
-		print(self.savepersongruppe(cursor, gid, pidlist))
 
-		self.db.rollback()
+			#if person['idcardexists'] == 'true':
+			print('000000000K')
+				#pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor,person['idcard'])))
+			#else:
+				#pidlist.append(self.saveperson(cursor, person))
+		#print(self.savepersongruppe(cursor, gid, pidlist))
+
+		#self.db.rollback()
 		#self.db.commit()
 		if cursor.rowcount == 1:
+			cursor.close()
 			return json
 		else:
+			cursor.close()
 			return '-1'
+
+	def searchcomuni(self, json=None):
+		cursor = self.db.cursor()
+		s = "A" + '%'
+		cursor.execute("SELECT Descrizione FROM comuni WHERE Descrizione like %s", (s,))
+		myresult = cursor.fetchall()
+		for x in myresult:
+			print(x)
+		return myresult

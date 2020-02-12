@@ -44,7 +44,7 @@ def login():
     """
     json = request.get_json()
     if json['password'] == 'password' and json['username'] == 'admin':
-        session['logged_in'] = True #Nachfragen ob Sicher!
+        session['logged_in'] = True
         print("eingelogt")
         return '0'
     else:
@@ -56,17 +56,39 @@ def logout():
     session['logged_in'] = False
     return '1'
 
+
 @app.route('/getcomuni', methods=['POST'])
 def getcomuni():
+    """
+    Post Request für Authoverfolstädigung der Saten auswahl
+    :return: Json Array mit Name der Saten [["ALBANIA"], ["ANDORRA"]]
+    """
     json = request.get_json()
     res = database.searchcomuni(json)
     return json.dumps(res)
 
+
 @app.route('/getstati', methods=['POST'])
 def getstati():
+    """
+    Post Request für Authoverfolstädigung der Saten auswahl
+    :return: Json Array mit Name der Saten [["ALBANIA"], ["ANDORRA"]]
+    """
     json = request.get_json()
     res = database.searchstati(json)
     return json.dumps(res)
+
+
+@app.route('/getdocumento', methods=['POST'])
+def getdocumento():
+    """
+    Post Request für Authoverfolstädigung der Documente auswahl
+    :return: Json Array mit Name der Saten [["asd"], ["adsa"]]
+    """
+    json = request.get_json()
+    res = database.searchdocumento(json)
+    return json.dumps(res)
+
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

@@ -8,4 +8,4 @@ DB = DBmanager();
 #personenliste = [person,personz]
 #DB.safeGastArray(personenliste);
 #DB.searchcomuni()
-print(json.dumps(DB.searchstati()))
+#print(json.dumps(DB.searchdocumento()))

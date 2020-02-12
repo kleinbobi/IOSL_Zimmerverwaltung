@@ -15,14 +15,17 @@ class DBmanager:
 	def lol(self):
 		return str(self.dbconnector)
 
-	#Erstellt eine Gruppe für die Buchung
-	def creategruppe(self,cursor):
+	def creategruppe(self, cursor, json):
 		"""
 		Diese Methode Erstellt eine Gruppe für das Abspeichern der Gäste
+		:param json: Das json das den name enthält alloggiato
 		:param cursor: DBcursor
 		:return: GruppenID
 		"""
-		cursor.execute("INSERT INTO gruppe(gruppeID) VALUES (NULL)")
+		s = 1
+		if json['alloggiato'] == 'CAPO GRRUPPO':
+			s = 0
+		cursor.execute("INSERT INTO gruppe(gruppeID, familie) VALUES (NULL , %s)", (s,))
 		return cursor.lastrowid
 
 	def saveperson(self, cursor, person, ausweis=None):
@@ -33,7 +36,7 @@ class DBmanager:
 		:param ausweis: Ausweis id der in die AusweisTable geschrieben wurde
 		:return: id der Person
 		"""
-		#2 birthplace muss mit wohnort/land ersetzt werden
+		#TODO 2 birthplace muss mit wohnort/land ersetzt werden
 		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['birthday'], person['adress'], person['plz'], person['place']))
 		return cursor.lastrowid
 
@@ -49,20 +52,20 @@ class DBmanager:
 		pidlist = []
 		try:
 			cursor = self.db.cursor()
-			gid = self.creategruppe(cursor)
+			gid = self.creategruppe(cursor, json)
 			print(json['to'])
 			print(json['from'])
 			for person in json['personen']:
 
-				if person['idcardexists'] == 'true':
+				if person['idcard'] is None:
 					print('000000000K')
-					pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor,person['idcard'])))
+					pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor, person['idcard'])))
 				else:
 					pidlist.append(self.saveperson(cursor, person))
 			print(self.savepersongruppe(cursor, gid, pidlist))
 
 
-			self.db.commit()
+			#self.db.commit()
 			if cursor.rowcount == 1:
 				cursor.close()
 				return json
@@ -75,7 +78,7 @@ class DBmanager:
 			cursor.close()
 			return '-1'
 
-	def searchcomuni(self, json=None):
+	def searchcomuni(self, json):
 		"""
 		Sucht in der Datanebank nach dem Gemeindan mit dem passenden Namen
 		:param json: Teil des Namens der Gemeinde
@@ -87,15 +90,38 @@ class DBmanager:
 		myresult = cursor.fetchall()
 		return myresult
 
-	def searchstati(self, json=None):
+	def searchstati(self, json):
 		"""
-		Sucht in der Datanebank nach dem Gemeindan mit dem passenden Namen
-		:param json: Teil des Namens der Gemeinde
-		:return: Liste mit den Gemeinden
+		Sucht in der Datanebank nach dem Staten mit dem passenden Namen
+		:param json: Teil des Namens der Staten
+		:return: Liste mit den Staten
 		"""
 		cursor = self.db.cursor()
-		#s = json['search'] + '%'
-		s = 'A%'
+		s = json['search'] + '%'
 		cursor.execute("SELECT Descrizione FROM stati WHERE Descrizione like %s", (s,))
+		myresult = cursor.fetchall()
+		return myresult
+
+	def searchdocumento(self, json):
+		"""
+		Sucht in der Datanebank nach den Documenten mit dem passenden Namen
+		:param json: Teil des Namens der Staten
+		:return: Liste mit den Staten
+		"""
+		cursor = self.db.cursor()
+		s = json['search'] + '%'
+		cursor.execute("SELECT Descrizione FROM documento WHERE Descrizione like %s", (s,))
+		myresult = cursor.fetchall()
+		return myresult
+
+	def searchalloggiato(self, json):
+		"""
+		Sucht in der Datanebank nach dem Alloggati mit dem passenden Namen
+		:param json: Teil des Namens der Staten
+		:return: Liste mit den Staten
+		"""
+		cursor = self.db.cursor()
+		s = json['search'] + '%'
+		cursor.execute("SELECT Descrizione FROM alloggiato WHERE Descrizione like %s", (s,))
 		myresult = cursor.fetchall()
 		return myresult

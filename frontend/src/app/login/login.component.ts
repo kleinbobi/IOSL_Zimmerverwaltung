@@ -8,6 +8,8 @@ import { ApiconnectorService } from '../apiconnector.service';
 })
 export class LoginComponent implements OnInit {
 
+  loggedin = false;
+
   formuser: string;
   formpass: string;
 
@@ -25,11 +27,24 @@ export class LoginComponent implements OnInit {
       password: this.formpass
     };
 
-    this.api.sendPost('http://127.0.0.1:5000/login', creds).subscribe(data => console.log(data));
+    this.formuser = '';
+    this.formpass = '';
+
+    this.api.sendPost('http://127.0.0.1:5000/login', creds).subscribe(data => {
+      if (data === 1) {
+        console.log('you are now logged in'); // TODO do the routing stuff
+        this.loggedin = true;
+      } else {
+        console.log('Wrong pass or user');
+      }
+    });
   }
 
   logout() {
-    this.api.sendPost('http://127.0.0.1:5000/logout', {}).subscribe(data => console.log(data));
+    this.api.sendPost('http://127.0.0.1:5000/logout', {}).subscribe(data => {
+        console.log('you are now logged out'); // TODO do the routing stuff
+        this.loggedin = false;
+    });
   }
 
 }

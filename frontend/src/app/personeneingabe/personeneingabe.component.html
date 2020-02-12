@@ -1,1 +1,62 @@
-<button mat-raised-button color="primary" (click)="sendPost()">Send Post</button>
+<mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step label="Zeiten auswählen">
+        <form>
+
+            <mat-form-field>
+                <mat-label>Ankunft</mat-label>
+                <input matInput [matDatepicker]="dpAn">
+                <mat-datepicker-toggle matSuffix [for]="dpAn"></mat-datepicker-toggle>
+                <mat-datepicker #dpAn></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Abfahrt</mat-label>
+                <input matInput [matDatepicker]="dpAb">
+                <mat-datepicker-toggle matSuffix [for]="dpAb"></mat-datepicker-toggle>
+                <mat-datepicker #dpAb></mat-datepicker>
+            </mat-form-field>            
+
+            <div>
+                <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step  label="Person mit Ausweis eintragen" required>
+        <form>
+
+            <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Ex. 1 Main St, New York, NY">
+            </mat-form-field>
+
+            <div>
+                <button mat-button matStepperPrevious>Zurück</button>
+                <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step  label="Personen eintragen" optional>
+        <form>
+
+            <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Ex. 1 Main St, New York, NY">
+            </mat-form-field>
+
+            <div>
+                <button mat-button matStepperPrevious>Zurück</button>
+                <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step label="Fertig">
+
+        <p>Hier nochmal alle Daten, Zeiten und Kunden</p>
+
+        <div>
+            <button mat-button matStepperPrevious>Zurück</button>
+            <button mat-raised-button color="primary" (click)="sendPost()">Bestätigen</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
+  

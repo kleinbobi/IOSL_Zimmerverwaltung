@@ -1,7 +1,7 @@
 {
     "from": "2020-02-10",
     "to": "2020-02-12",
-    "zimmerNr": "30",
+    "zimmerNr": ["30", "21"],
     "alloggiato": "CAPO GRRUPPO",
     "personen": [
         {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ApiconnectorService } from '../apiconnector.service';
+import { MatChipInputEvent } from '@angular/material';
 
 @Component({
   selector: 'app-personeneingabe',
@@ -9,10 +9,39 @@ import { ApiconnectorService } from '../apiconnector.service';
 })
 export class PersoneneingabeComponent implements OnInit {
 
+  an = new Date();
+  ab = new Date();
+  alloggiato: string;
+  zimmer = [];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.zimmer.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(z: string): void {
+    const index = this.zimmer.indexOf(z);
+
+    if (index >= 0) {
+      this.zimmer.splice(index, 1);
+    }
+  }
+
+
   sendobj = {
     from: "2020-02-10",
     to: "2020-02-12",
-    zimmerNr: "30",
+    zimmerNr: ["30", "21"],
     alloggiato: "CAPO GRRUPPO",
     personen: [
         {
@@ -60,7 +89,19 @@ export class PersoneneingabeComponent implements OnInit {
 
   sendPost() {
     console.log('sent the post');
-    this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
+    
+    console.log(this.formatSqlDate(this.an));
+    console.log(this.formatSqlDate(this.ab));
+    console.log(this.alloggiato);
+    console.log(this.zimmer);
+    
+
+    // this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
+  }
+
+  formatSqlDate(d: Date): string {
+    let month = (d.getMonth() + 1);
+    return d.getFullYear() + '-' + (month < 10 ? '0' : '') + (d.getMonth() + 1) + '-' + d.getDate();
   }
 
 }

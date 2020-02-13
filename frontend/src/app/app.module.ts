@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper'; 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips'; 
+import {MatRadioModule} from '@angular/material/radio'; 
 
 import { LoginComponent } from './login/login.component';
 import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
@@ -40,6 +41,7 @@ import { FormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatChipsModule,
     MatIconModule,
+    MatRadioModule,
 
     BrowserModule,
     AppRoutingModule,

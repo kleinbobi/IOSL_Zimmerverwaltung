@@ -88,20 +88,24 @@ export class PersoneneingabeComponent implements OnInit {
   }
 
   sendPost() {
-    console.log('sent the post');
+    let postobj = {
+      from: this.formatSqlDate(this.ab),
+      to: this.formatSqlDate(this.an),
+      zimmerNr: this.zimmer,
+      alloggiato: this.alloggiato,
+      personen: []
+    }
     
-    console.log(this.formatSqlDate(this.an));
-    console.log(this.formatSqlDate(this.ab));
-    console.log(this.alloggiato);
-    console.log(this.zimmer);
+    console.log(postobj);
     
-
     // this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
   }
 
-  formatSqlDate(d: Date): string {
-    let month = (d.getMonth() + 1);
-    return d.getFullYear() + '-' + (month < 10 ? '0' : '') + (d.getMonth() + 1) + '-' + d.getDate();
+  formatSqlDate(date: Date): string {
+    let m = date.getMonth() + 1;
+    let d = date.getDate();
+
+    return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') +  m + '/' + date.getFullYear();
   }
 
 }

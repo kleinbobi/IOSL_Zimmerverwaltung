@@ -1,17 +1,18 @@
 import os
 from flask import Flask, render_template, session
 from flask import request
-from backend.DBManager import DBmanager
+from DBManager import DBmanager
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 database = DBmanager()
 personenliste = []
+
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
-
 
 
 @app.route('/test', methods=['GET'])
@@ -25,14 +26,13 @@ def sendPersonen():
     :return: Json wenn erfolgreich, -1 wenn SQL fehlgeschlagen, wenn -2 wenn Authentification nicht in session
     """
     print("OK")
-    if session.get('logged_in'):
-        if request.is_json:
-            print(request.is_json)
-            json = request.get_json()
-
-        return database.savejson(json)
-    else:
-        return '-2'
+   # if session.get('logged_in'):
+    if request.is_json:
+        print(request.is_json)
+        json = request.get_json()
+    return database.savejson(json)
+    #else:
+        #return '-2'
 
 # vorname, nachname, geburtsdatum, geburtsort, email="", tel="", str="", wohnland="",plz=0,hausnummer="",wohnort=""
 

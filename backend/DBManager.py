@@ -36,47 +36,66 @@ class DBmanager:
 		:param ausweis: Ausweis id der in die AusweisTable geschrieben wurde
 		:return: id der Person
 		"""
-		#TODO 2 birthplace muss mit wohnort/land ersetzt werden
-		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['birthday'], person['adress'], person['plz'], person['place']))
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['birthday'], person['address'], person['plz'], person['place'], person['gender']))
 		return cursor.lastrowid
 
 	def savepersongruppe(self, cursor, gid, pidlist):
 		for pid in pidlist:
 			cursor.execute("INSERT INTO gruppe_gast (gruppeID, gastID) VALUES (%s,%s)", (int(gid), int(pid)))
 
-	def saveausweis(self,cursor,ausweis):
+	def saveausweis(self, cursor, ausweis):
 		cursor.execute("INSERT INTO ausweis (ausweis_nr, typ, land) VALUES (%s,%s,%s)", (ausweis['nr'], ausweis['type'], ausweis['country']))
 		return cursor.lastrowid
 
+	def createbuchung(self, cursor, json):
+		"""
+		erstellt eine Buchung in der Buchungstabelle mit dem ankunftsdatum (from) dem enddatum (to) und dem Name (name)
+		:param cursor: cursor
+		:param json: json
+		:return: bid die ID der Buchung
+		"""
+		cursor.execute("INSERT INTO buchung (ankunft, abfahrt, name) VALUES (%s,%s,%s)", (json['to'], json['from'], json['name']))
+		bid = cursor.lastrowid
+		for z in json['zimmerNr']:
+			cursor.execute("INSERT INTO buchung_zimmer (buchungid) VALUES (%s,%s)", (bid,))
+		return bid
+
+	def safegruppebuchung(self, cursor, gid, bid):
+		"""
+		Speichert in den Table buchung_gruppe die beiden einzigen Paramater gid und bid die die beide Fremdschlüssel sind
+		:param cursor: cursor
+		:param gid: gruppen ID
+		:param bid: buchung ID
+		"""
+		cursor.execute("INSERT INTO buchung_gruppe (buchung, gruppe) VALUES (%s,%s)", (gid, bid))
+
+
 	def savejson(self, json):
 		pidlist = []
-		try:
-			cursor = self.db.cursor()
-			gid = self.creategruppe(cursor, json)
-			print(json['to'])
-			print(json['from'])
-			for person in json['personen']:
 
-				if person['idcard'] is None:
-					print('000000000K')
-					pidlist.append(self.saveperson(cursor, person, self.saveausweis(cursor, person['idcard'])))
-				else:
-					pidlist.append(self.saveperson(cursor, person))
-			print(self.savepersongruppe(cursor, gid, pidlist))
-
-
-			#self.db.commit()
-			if cursor.rowcount == 1:
-				cursor.close()
-				return json
+		cursor = self.db.cursor()
+		gid = self.creategruppe(cursor, json)
+		print(json['to'])
+		print(json['from'])
+		for person in json['personen']:
+			if person['idcard'] is None:
+				pidlist.append(self.saveperson(cursor, person))
 			else:
-				cursor.close()
-				return '-1'
-		except mysql.connector.Error as error :
-			print("Failed to update record to database rollback: {}".format(error))
-			self.db.rollback()
+				self.saveausweis(cursor, person['idcard'])
+				pidlist.append(self.saveperson(cursor, person, person['idcard']['nr']))
+		self.savepersongruppe(cursor, gid, pidlist)
+		bid = self.createbuchung(cursor, json)
+		self.safegruppebuchung(gid, bid)
+		self.db.commit()
+		if cursor.rowcount == 1:
+			cursor.close()
+			return json
+		else:
 			cursor.close()
 			return '-1'
+		#todo add try catch again
+
+####################################################################
 
 	def searchcomuni(self, json):
 		"""
@@ -125,3 +144,25 @@ class DBmanager:
 		cursor.execute("SELECT Descrizione FROM alloggiato WHERE Descrizione like %s", (s,))
 		myresult = cursor.fetchall()
 		return myresult
+
+#########################################################################
+
+	def getgruppenfürout(self):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT * FROM gruppe WHERE gesendet IS FALSE')
+		return cursor.fetchall()
+
+	def getpersonenfürout(self, gid):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT gast.* FROM gast, gruppe_gast WHERE gruppeID = %s AND gruppe_gast.gastID = gast.id', (gid,))
+		return cursor.fetchall()
+
+	def getbuchungfürout(self, gid):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT buchung.* FROM buchung, buchung_gruppe WHERE gruppe = %s AND buchung = buchungid', (gid,))
+		return cursor.fetchall()
+
+	def getcodicecomuni(self, name):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT buchung.* FROM buchung, buchung_gruppe WHERE gruppe = %s AND buchung = buchungid', (gid,))
+		return cursor.fetchall()

@@ -1,5 +1,5 @@
 from flask import json
-
+from backend.GenerateOutput import generateoutput, daysbetween, strechname
 from backend.DBManager import DBmanager
 from backend.Person import Person
 DB = DBmanager();
@@ -9,3 +9,6 @@ DB = DBmanager();
 #DB.safeGastArray(personenliste);
 #DB.searchcomuni()
 #print(json.dumps(DB.searchdocumento()))
+#generateoutput(DB)
+print(daysbetween("13/02/2020", "18/6/2020"))
+print(strechname("Benjamin",50))

@@ -38,7 +38,7 @@ class DBmanager:
 		:param ausweis: Ausweis id der in die AusweisTable geschrieben wurde
 		:return: id der Person
 		"""
-		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender, geburtsortIT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['location'], person['address'], person['plz'], person['place'], person['gender'], person['birthplaceIt']))
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender, geburtsortIT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['location'], person['address'], person['plz'], person['place'], person['gender'], person['birthPlaceIt']))
 		return cursor.lastrowid
 
 	def savepersongruppe(self, cursor, gid, pidlist):
@@ -56,10 +56,15 @@ class DBmanager:
 		:param json: json
 		:return: bid die ID der Buchung
 		"""
-		cursor.execute("INSERT INTO buchung (ankunft, abfahrt, name) VALUES (%s,%s,%s)", (json['to'], json['from'], json['name']))
+		if 'name' in json:
+			s = json['name']
+		else:
+			s = ''
+
+		cursor.execute("INSERT INTO buchung (ankunft, abfahrt, name) VALUES (%s,%s,%s)", (json['from'], json['to'], s))
 		bid = cursor.lastrowid
 		for z in json['zimmerNr']:
-			cursor.execute("INSERT INTO buchung_zimmer (buchungid) VALUES (%s,%s)", (bid,))
+			cursor.execute("INSERT INTO buchung_zimmer (buchungid , zimmerID) VALUES (%s, %s)", (bid, z))
 		return bid
 
 	def safegruppebuchung(self, cursor, gid, bid):
@@ -91,7 +96,7 @@ class DBmanager:
 				pidlist.append(self.saveperson(cursor, person, person['idcard']['nr']))
 		self.savepersongruppe(cursor, gid, pidlist)
 		bid = self.createbuchung(cursor, json)
-		self.safegruppebuchung(gid, bid)
+		self.safegruppebuchung(cursor, gid, bid)
 		self.db.commit()
 		if cursor.rowcount == 1:
 			cursor.close()

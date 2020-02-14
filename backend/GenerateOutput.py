@@ -3,9 +3,11 @@ from datetime import datetime
 def generateoutput(dbmanager):
 	dagobert = ""
 	ret = dbmanager.getgruppenfürout()
+	print(ret)
 	for gr in ret:
+		print("ok")
 		bu = dbmanager.getbuchungfürout(gr[0])# Buchung die Zur gruppe gehört
-		pl = dbmanager.getpersonenfürout('7')#gr[0] #list der Personen in Gruppe
+		pl = dbmanager.getpersonenfürout(gr[0])#list der Personen in Gruppe
 		for x in pl: # c person in personenliste
 			if x[6] is None:
 				if gr[1] == 1:
@@ -20,8 +22,8 @@ def generateoutput(dbmanager):
 				else:
 					dagobert += '18'
 
-			dagobert += bu[1]# muss im format dd/mm/yyyy
-			dagobert += dagobert(bu[1], bu[2])
+			dagobert += bu[0][1]# muss im format dd/mm/yyyy
+			dagobert += daysbetween(bu[0][1], bu[0][2])
 			dagobert += strechname(x[2], 50)#nachname
 			dagobert += strechname(x[1], 30)#vorname
 
@@ -33,29 +35,35 @@ def generateoutput(dbmanager):
 			dagobert += x[3]
 			if x[13] is not None: #gemendecode
 				j = dbmanager.getcomuni(x[13])
-				dagobert += j[0]+j[2]
+				dagobert += j[0][0]+j[0][2]
 				dagobert += '100000100'
 			else: #Ländercode
 				dagobert += strechname("", 11)
-				dagobert += dbmanager.getstati(x[4])[0]
+				dagobert += str(dbmanager.getstati(x[4])[0][0])
 
-			dagobert += dbmanager.getstati(x[4])[0]
+			dagobert += str(dbmanager.getstati(x[4])[0][0])
+
 
 			if x[6] is None:
 				dagobert += strechname("", 34)#34 Lehrzeichen
 			else:
 				id = dbmanager.getausweis(x[6])
-				dagobert += dbmanager.getdocumento(id[1])[0]
-				dagobert += strechname(id[0], 20)
+				dagobert += id[0][1]
+				dagobert += strechname(id[0][0], 20)
 				#9 caracter land comune sex
-				r = dbmanager.getcomuni(id[2])
+				r = dbmanager.getcomuni(id[0][2])
 				if r is None: #hier könnte fehler sein
-					r=dbmanager.getstati(id[2])
-				dagobert += r[0]
+					r=dbmanager.getstati(id[0][2])
+				dagobert += str(r[0][0])
 
 			dagobert += '\n'
+			for i in range(0, len(dagobert)):
+				print(i)
 		dagobert += '\r'
-
+	print(dagobert)
+	f = open('testoutput.txt', 'w')
+	f.write(dagobert)
+	f.close()
 
 def daysbetween(von, bis):
 	"""
@@ -81,7 +89,7 @@ def strechname(ln, to):
 	:param to: zu Streckende Länge
 	:return: gestrechten String
 	"""
-	ret = ln
+	ret = str(ln)
 	for i in range(len(ln)+1, to+1):
 		ret += " "
 	return ret

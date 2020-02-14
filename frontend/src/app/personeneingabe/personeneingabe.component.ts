@@ -39,8 +39,8 @@ export class PersoneneingabeComponent implements OnInit {
 
 
   sendobj = {
-    from: "2020-02-10",
-    to: "2020-02-12",
+    from: "10/02/2020",
+    to: "12/02/2020",
     zimmerNr: ["30", "21"],
     alloggiato: "CAPO GRRUPPO",
     personen: [
@@ -48,7 +48,7 @@ export class PersoneneingabeComponent implements OnInit {
           name: "Paul",
           surname: "Prünster",
           gender: "m",
-          birthday: "2001-03-11",
+          birthday: "11/03/2020",
           birthplace: "Italia",
           location: "Italien",
           tel: "3801513777",
@@ -67,7 +67,7 @@ export class PersoneneingabeComponent implements OnInit {
           name: "Aaron",
           surname: "Wilhalm",
           gender: "m",
-          birthday: "2001-03-11",
+          birthday: "11/03/2020",
           birthplace: "Italia",
           location: "Italien",
           tel: "3801513777",

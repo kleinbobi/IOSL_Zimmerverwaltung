@@ -31,7 +31,30 @@ def generateoutput(dbmanager):
 				dagobert += '1'
 
 			dagobert += x[3]
+			if x[13] is not None: #gemendecode
+				j = dbmanager.getcomuni(x[13])
+				dagobert += j[0]+j[2]
+				dagobert += '100000100'
+			else: #Ländercode
+				dagobert += strechname("", 11)
+				dagobert += dbmanager.getstati(x[4])[0]
 
+			dagobert += dbmanager.getstati(x[4])[0]
+
+			if x[6] is None:
+				dagobert += strechname("", 34)#34 Lehrzeichen
+			else:
+				id = dbmanager.getausweis(x[6])
+				dagobert += dbmanager.getdocumento(id[1])[0]
+				dagobert += strechname(id[0], 20)
+				#9 caracter land comune sex
+				r = dbmanager.getcomuni(id[2])
+				if r is None: #hier könnte fehler sein
+					r=dbmanager.getstati(id[2])
+				dagobert += r[0]
+
+			dagobert += '\n'
+		dagobert += '\r'
 
 
 def daysbetween(von, bis):

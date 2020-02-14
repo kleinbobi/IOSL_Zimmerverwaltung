@@ -15,6 +15,8 @@ class DBmanager:
 	def lol(self):
 		return str(self.dbconnector)
 
+################################################################################################
+
 	def creategruppe(self, cursor, json):
 		"""
 		Diese Methode Erstellt eine Gruppe für das Abspeichern der Gäste
@@ -36,7 +38,7 @@ class DBmanager:
 		:param ausweis: Ausweis id der in die AusweisTable geschrieben wurde
 		:return: id der Person
 		"""
-		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['birthday'], person['address'], person['plz'], person['place'], person['gender']))
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender, geburtsortIT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['location'], person['address'], person['plz'], person['place'], person['gender'], person['birthplaceIt']))
 		return cursor.lastrowid
 
 	def savepersongruppe(self, cursor, gid, pidlist):
@@ -69,8 +71,12 @@ class DBmanager:
 		"""
 		cursor.execute("INSERT INTO buchung_gruppe (buchung, gruppe) VALUES (%s,%s)", (gid, bid))
 
-
 	def savejson(self, json):
+		"""
+		Die Hauptmethode für das Speichern einer Person von hier aus werden alle anderen Methoden aufgerufen
+		:param json: Das Json mit den Informationen zur Buchung
+		:return:
+		"""
 		pidlist = []
 
 		cursor = self.db.cursor()
@@ -162,7 +168,22 @@ class DBmanager:
 		cursor.execute('SELECT buchung.* FROM buchung, buchung_gruppe WHERE gruppe = %s AND buchung = buchungid', (gid,))
 		return cursor.fetchall()
 
-	def getcodicecomuni(self, name):
+	def getcomuni(self, name):
 		cursor = self.db.cursor()
-		cursor.execute('SELECT buchung.* FROM buchung, buchung_gruppe WHERE gruppe = %s AND buchung = buchungid', (gid,))
+		cursor.execute('SELECT * FROM comuni WHERE Descrizione = %s', (name,))
+		return cursor.fetchall()
+
+	def getstati(self, name):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT * FROM stati WHERE Descrizione = %s', (name,))
+		return cursor.fetchall()
+
+	def getdocumento(self, name):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT * FROM documento WHERE Descrizione = %s', (name,))
+		return cursor.fetchall()
+
+	def getausweis(self, nr):
+		cursor = self.db.cursor()
+		cursor.execute('SELECT * FROM ausweis WHERE ausweis_nr = %s', (nr,))
 		return cursor.fetchall()

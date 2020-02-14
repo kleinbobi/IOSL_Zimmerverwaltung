@@ -53,7 +53,7 @@ export class PersoneneingabeComponent implements OnInit {
           location: "Italien",
           tel: "3801513777",
           mail: "paul.pruenster@gmai.com",
-          adress: "Botengasse 17/A",
+          address: "Botengasse 17/A",
           plz: "39050",
           place: "Jenesien",
 
@@ -72,7 +72,7 @@ export class PersoneneingabeComponent implements OnInit {
           location: "Italien",
           tel: "3801513777",
           mail: "paul.pruenster@gmai.com",
-          adress: "Botengasse 17/A",
+          address: "Botengasse 17/A",
           plz: "39050",
           place: "Jenesien",
 

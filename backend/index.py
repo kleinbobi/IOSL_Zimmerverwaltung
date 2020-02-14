@@ -61,7 +61,8 @@ def logout():
 def getcomuni():
     """
     Post Request für Authoverfolstädigung der Saten auswahl
-    :return: Json Array mit Name der Saten [["ALBANIA"], ["ANDORRA"]]
+    :return: Json Array mit N/backend/static/
+ame der Saten [["ALBANIA"], ["ANDORRA"]]
     """
     json = request.get_json()
     res = database.searchcomuni(json)

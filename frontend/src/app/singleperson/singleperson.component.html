@@ -1,0 +1,105 @@
+<h2>Person mit Ausweis eintragen</h2>
+
+<table>
+    <tr>
+        <td>
+
+            <h3>Personendetails</h3>
+
+            <mat-form-field>
+                <mat-label>Vorname</mat-label>
+                <input [(ngModel)]="name" name="name" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Nachname</mat-label>
+                <input [(ngModel)]="surname" name="surname" matInput required>
+            </mat-form-field>
+
+            <br>
+
+            <mat-radio-group [(ngModel)]="gender" name="gender">
+                <mat-radio-button value="m">Männlich</mat-radio-button>
+                <mat-radio-button value="f">Weiblich</mat-radio-button>
+            </mat-radio-group>           
+
+            <mat-form-field>
+                <mat-label>Geburtstag</mat-label>
+                <input [(ngModel)]="birthday" name="birthday" matInput [matDatepicker]="geb" required>
+                <mat-datepicker-toggle matSuffix [for]="geb"></mat-datepicker-toggle>
+                <mat-datepicker #geb></mat-datepicker>
+            </mat-form-field>  
+
+            <mat-form-field *ngIf="!birthPlaceIt">
+                <mat-label>Geburtsland</mat-label>
+                <input [(ngModel)]="birthplace" name="birthplace" matInput>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!birthplace">
+                <mat-label>Geburtgemeinde</mat-label>
+                <input [(ngModel)]="birthPlaceIt" name="birthPlaceIt" matInput>
+            </mat-form-field>          
+
+        </td>
+        <td>
+
+            <h3>Weitere Daten</h3>
+
+            <mat-form-field>
+                <mat-label>Wohnland</mat-label>
+                <input [(ngModel)]="location" name="location" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Telefon</mat-label>
+                <input [(ngModel)]="tel" name="tel" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Mail</mat-label>
+                <input [(ngModel)]="mail" name="mail" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Adresse</mat-label>
+                <input [(ngModel)]="address" name="address" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>PLZ</mat-label>
+                <input [(ngModel)]="plz" name="plz" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Wohnort</mat-label>
+                <input [(ngModel)]="place" name="place" matInput required>
+            </mat-form-field>  
+
+        </td>
+        <td *ngIf="showIdInput">
+
+            <h3>Ausweisdetails</h3>
+
+            <mat-form-field>
+                <mat-label>Ausweisnummer</mat-label>
+                <input [(ngModel)]="nr" name="nr" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Austellungsland</mat-label>
+                <input [(ngModel)]="country" name="country" matInput required>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Ausweistyp</mat-label>
+                <input [(ngModel)]="type" name="type" matInput required>
+            </mat-form-field>
+
+        </td>
+    </tr>
+</table>
+
+<button mat-raised-button (click)="outputObject()" color="accent" id="speichern-but" matStepperNext matStepperPrevious>
+    <mat-icon id="speichern">save</mat-icon>
+    Speichern
+</button>

@@ -9,8 +9,8 @@ import { MatChipInputEvent } from '@angular/material';
 })
 export class PersoneneingabeComponent implements OnInit {
 
-  an = new Date();
-  ab = new Date();
+  an;
+  ab;
   alloggiato: string;
   zimmer = [];
 

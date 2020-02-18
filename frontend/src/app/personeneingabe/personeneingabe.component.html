@@ -48,118 +48,19 @@
         </form>
     </mat-step>
     <mat-step  label="Person mit Ausweis eintragen" required>
-        <h2>Person mit Ausweis eintragen</h2>
-        <!-- <form> -->
+        <app-singleperson [showIdInput]="true"></app-singleperson>
 
-            <table>
-                <tr>
-                    <td>
-
-                        <h3>Personendetails</h3>
-
-                        <mat-form-field>
-                            <mat-label>Vorname</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Nachname</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-radio-group label="Select an option">
-                            <mat-radio-button value="m">Männlich</mat-radio-button>
-                            <mat-radio-button value="f">Weiblich</mat-radio-button>
-                        </mat-radio-group>           
-            
-                        <mat-form-field>
-                            <mat-label>Geburtstag</mat-label>
-                            <input matInput [matDatepicker]="geb">
-                            <mat-datepicker-toggle matSuffix [for]="geb"></mat-datepicker-toggle>
-                            <mat-datepicker #geb></mat-datepicker>
-                        </mat-form-field>  
-            
-                        <mat-form-field *ngIf="!ggem">
-                            <mat-label>Geburtsort</mat-label>
-                            <input [(ngModel)]="gort" name="gort" matInput>
-                        </mat-form-field>
-            
-                        <mat-form-field *ngIf="!gort">
-                            <mat-label>Geburtgemeinde</mat-label>
-                            <input [(ngModel)]="ggem" name="ggem" matInput>
-                        </mat-form-field>          
-
-                    </td>
-                    <td>
-
-                        <h3>Weitere Daten</h3>
-
-                        <mat-form-field>
-                            <mat-label>Wohnland</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Telefon</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Mail</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Adresse</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>PLZ</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Wohnort</mat-label>
-                            <input matInput required>
-                        </mat-form-field>  
-
-                    </td>
-                    <td>
-
-                        <h3>Ausweisdetails</h3>
-
-                        <mat-form-field>
-                            <mat-label>Ausweisnummer</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Austellungsland</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-            
-                        <mat-form-field>
-                            <mat-label>Ausweistyp</mat-label>
-                            <input matInput required>
-                        </mat-form-field>
-
-                    </td>
-                </tr>
-            </table>
-
-            <div>
-                <button mat-button matStepperPrevious>Zurück</button>
-                <button mat-raised-button color="primary" matStepperNext>Weiter</button>
-            </div>
-        <!-- </form> -->
+        <div>
+            <button mat-button matStepperPrevious>Zurück</button>
+            <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+        </div>
     </mat-step>
     <mat-step  label="Personen eintragen" optional>
         <h2>Personen eintragen</h2>
         <form>
             <h3>Liste zeigt alle schon erstellten Personen TODO</h3>
 
-            <button mat-raised-button color="primary" matStepperNext>Person Hinzufügen TODO</button>
+            <button mat-raised-button color="primary">Person Hinzufügen TODO</button>
 
             <div>
                 <button mat-button matStepperPrevious>Zurück</button>

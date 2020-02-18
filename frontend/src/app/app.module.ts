@@ -21,12 +21,16 @@ import { LoginComponent } from './login/login.component';
 import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { SinglepersonComponent } from './singleperson/singleperson.component';
+import { PersonenlisteComponent } from './personenliste/personenliste.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PersoneneingabeComponent
+    PersoneneingabeComponent,
+    SinglepersonComponent,
+    PersonenlisteComponent
   ],
   imports: [
     HttpClientModule,

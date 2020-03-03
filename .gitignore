@@ -1,1 +1,2 @@
-/backend/static/
+/backend/static/*
+/backend/templates/index.html

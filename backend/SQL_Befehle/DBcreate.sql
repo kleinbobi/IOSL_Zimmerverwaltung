@@ -123,4 +123,3 @@ create table stati
     Datainizio  varchar(40) null,
     DataFine    varchar(40) null
 );
-

@@ -1,6 +1,12 @@
 from datetime import datetime
 
+
 def generateoutput(dbmanager):
+	"""
+	Ertellt den 
+	:param dbmanager:
+	:return:
+	"""
 	dagobert = ""
 	ret = dbmanager.getgruppenfürout()
 	print(ret)
@@ -50,7 +56,7 @@ def generateoutput(dbmanager):
 				id = dbmanager.getausweis(x[6])
 				dagobert += id[0][1]
 				dagobert += strechname(id[0][0], 20)
-				#9 caracter land comune sex
+				#9 caracter land comune
 				r = dbmanager.getcomuni(id[0][2])
 				if r is None: #hier könnte fehler sein
 					r=dbmanager.getstati(id[0][2])
@@ -64,6 +70,7 @@ def generateoutput(dbmanager):
 	f = open('testoutput.txt', 'w')
 	f.write(dagobert)
 	f.close()
+
 
 def daysbetween(von, bis):
 	"""

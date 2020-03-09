@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { GestureConfig, MatNativeDateModule, MatIconModule } from '@angular/material';
+import { GestureConfig, MatNativeDateModule, MatIconModule, MAT_DATE_LOCALE } from '@angular/material';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
@@ -52,7 +52,8 @@ import { PersonenlisteComponent } from './personenliste/personenliste.component'
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })

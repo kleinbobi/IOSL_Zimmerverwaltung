@@ -11,5 +11,4 @@ export class PersonenlisteComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

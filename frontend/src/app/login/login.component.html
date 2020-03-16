@@ -1,4 +1,5 @@
 <div *ngIf="!loggedin;else logoutTemplate">
+  <p id="errorText">{{showString}}</p>
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput name="username" placeholder="Username" [(ngModel)]="formuser" required>

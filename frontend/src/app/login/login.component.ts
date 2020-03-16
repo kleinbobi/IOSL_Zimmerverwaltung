@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiconnectorService } from '../apiconnector.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,12 @@ export class LoginComponent implements OnInit {
 
   loggedin = false;
 
+  showString: string;
+
   formuser: string;
   formpass: string;
 
-  constructor(private api: ApiconnectorService) { }
+  constructor(private api: ApiconnectorService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,12 +34,17 @@ export class LoginComponent implements OnInit {
     this.formpass = '';
 
     this.api.sendPost('http://127.0.0.1:5000/login', creds).subscribe(data => {
-      if (data === 1) {
+      if (data === 0) {
         console.log('you are now logged in'); // TODO do the routing stuff
+        this.showString = '';
         this.loggedin = true;
+
+        this.router.navigate(['personeneingabe']); // Login
       } else {
-        console.log('Wrong pass or user');
+        this.showString = 'Wrong password or username';
       }
+    }, e => {
+      this.showString = 'Server is down or Cors'
     });
   }
 
@@ -44,6 +52,8 @@ export class LoginComponent implements OnInit {
     this.api.sendPost('http://127.0.0.1:5000/logout', {}).subscribe(data => {
         console.log('you are now logged out'); // TODO do the routing stuff
         this.loggedin = false;
+
+        this.router.navigate(['']);
     });
   }
 

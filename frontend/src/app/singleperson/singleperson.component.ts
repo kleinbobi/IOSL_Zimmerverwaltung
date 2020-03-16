@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-singleperson',
@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SinglepersonComponent implements OnInit {
 
   @Input() showIdInput = false;
+  @Output() outPerson = new EventEmitter<any>();
 
   name: string;
   surname: string;
@@ -57,9 +58,7 @@ export class SinglepersonComponent implements OnInit {
       idcard: id
     };
 
-    console.log(person);
-
-    //TODO output obj
+    this.outPerson.emit(person);
   }
 
   formatSqlDate(date: Date): string {

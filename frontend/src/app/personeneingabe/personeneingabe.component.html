@@ -48,7 +48,7 @@
         </form>
     </mat-step>
     <mat-step  label="Person mit Ausweis eintragen" required>
-        <app-singleperson [showIdInput]="true"></app-singleperson>
+        <app-singleperson (outPerson)="saveAPerson($event)" [showIdInput]="true"></app-singleperson>
 
         <div>
             <button mat-button matStepperPrevious>Zurück</button>

@@ -1,2 +1,4 @@
 /backend/static/*
 /backend/templates/index.html
+
+backend/__pycache__/

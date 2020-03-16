@@ -13,6 +13,7 @@ export class PersoneneingabeComponent implements OnInit {
   ab;
   alloggiato: string;
   zimmer = [];
+  personen = [];
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
@@ -35,6 +36,10 @@ export class PersoneneingabeComponent implements OnInit {
     if (index >= 0) {
       this.zimmer.splice(index, 1);
     }
+  }
+
+  saveAPerson(personobj) {
+    this.personen.push(personobj);
   }
 
 
@@ -95,12 +100,12 @@ export class PersoneneingabeComponent implements OnInit {
       to: this.formatSqlDate(this.an),
       zimmerNr: this.zimmer,
       alloggiato: this.alloggiato,
-      personen: []
+      personen: this.personen
     }
     
     console.log(postobj);
     
-    this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
+    //this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
   }
 
   formatSqlDate(date: Date): string {
@@ -109,5 +114,4 @@ export class PersoneneingabeComponent implements OnInit {
 
     return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') +  m + '/' + date.getFullYear();
   }
-
 }

@@ -1,25 +1,27 @@
-<mat-horizontal-stepper labelPosition="bottom" #stepper>
+<mat-horizontal-stepper linear #stepper>
+    <!-- TODO: add linear stuff to stepper (formgroup und so zuig) -->
+
     <mat-step label="Übernachtungsdetails">
         <h2>Übernachtungsdetails</h2>
         <form>
 
             <mat-form-field>
                 <mat-label>Ankunft</mat-label>
-                <input matInput [(ngModel)]="an" name="an" [matDatepicker]="dpAn">
+                <input matInput [(ngModel)]="sendObj.an" name="an" [matDatepicker]="dpAn" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAn"></mat-datepicker-toggle>
                 <mat-datepicker #dpAn></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Abfahrt</mat-label>
-                <input matInput [(ngModel)]="ab" name="ab" [matDatepicker]="dpAb">
+                <input matInput [(ngModel)]="sendObj.ab" name="ab" [matDatepicker]="dpAb" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAb"></mat-datepicker-toggle>
                 <mat-datepicker #dpAb></mat-datepicker>
             </mat-form-field>     
 
             <mat-form-field>
                 <mat-label>Übernachtungsart</mat-label>
-                <mat-select [(ngModel)]="alloggiato" name="alloggiato">
+                <mat-select [(ngModel)]="sendObj.alloggiato" name="alloggiato" required>
                     <mat-option value="OSPITE SINGOLO">Ospite singolo</mat-option>
                     <mat-option value="CAPO FAMIGLIA">Capo famigila</mat-option>
                     <mat-option value="CAPO GRUPPO">Capo gruppo</mat-option>
@@ -28,17 +30,18 @@
 
             <mat-form-field class="example-chip-list">
                 <mat-chip-list #zimmerChips aria-label="Zimmer auswählen">
-                  <mat-chip *ngFor="let z of zimmer" [selectable]="true"
+                  <mat-chip *ngFor="let z of sendObj.zimmerNr" [selectable]="true"
                            [removable]="true" (removed)="remove(z)">
                     {{z}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                   </mat-chip>
-                  <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it) -->
+                  <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it)
+                        TODO: make required kp wie -->
                   <input placeholder="Zimmer hinzufügen..."
                          [matChipInputFor]="zimmerChips"
                          [matChipInputSeparatorKeyCodes]="[13]"
                          [matChipInputAddOnBlur]="true"
-                         (matChipInputTokenEnd)="add($event)"   >
+                         (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
               </mat-form-field>
               
@@ -47,20 +50,10 @@
             </div>
         </form>
     </mat-step>
-    <mat-step  label="Person mit Ausweis eintragen" required>
-        <app-singleperson (outPerson)="saveAPerson($event)" [showIdInput]="true"></app-singleperson>
-
-        <div>
-            <button mat-button matStepperPrevious>Zurück</button>
-            <button mat-raised-button color="primary" matStepperNext>Weiter</button>
-        </div>
-    </mat-step>
-    <mat-step  label="Personen eintragen" optional>
+    <mat-step  label="Personen eintragen">
         <h2>Personen eintragen</h2>
         <form>
-            <h3>Liste zeigt alle schon erstellten Personen TODO</h3>
-
-            <button mat-raised-button color="primary">Person Hinzufügen TODO</button>
+            <app-personenliste (personenChange)="updatePersonen($event)"></app-personenliste>
 
             <div>
                 <button mat-button matStepperPrevious>Zurück</button>
@@ -72,6 +65,10 @@
         <h2>Fertig</h2>
 
         <p>Hier nochmal alle Daten, Zeiten und Kunden TODO</p>
+
+        <pre style="text-align: left;">{{sendObj | json}}</pre>
+
+        
 
         <div>
             <button mat-button matStepperPrevious>Zurück</button>

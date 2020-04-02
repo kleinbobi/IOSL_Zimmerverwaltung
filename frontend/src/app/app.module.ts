@@ -16,12 +16,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips'; 
 import {MatRadioModule} from '@angular/material/radio'; 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { LoginComponent } from './login/login.component';
 import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { SinglepersonComponent } from './singleperson/singleperson.component';
 import { PersonenlisteComponent } from './personenliste/personenliste.component';
 
 @NgModule({
@@ -29,7 +29,6 @@ import { PersonenlisteComponent } from './personenliste/personenliste.component'
     AppComponent,
     LoginComponent,
     PersoneneingabeComponent,
-    SinglepersonComponent,
     PersonenlisteComponent
   ],
   imports: [
@@ -46,6 +45,7 @@ import { PersonenlisteComponent } from './personenliste/personenliste.component'
     MatChipsModule,
     MatIconModule,
     MatRadioModule,
+    MatSlideToggleModule,
 
     BrowserModule,
     AppRoutingModule,

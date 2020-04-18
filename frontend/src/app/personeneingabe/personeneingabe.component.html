@@ -1,23 +1,23 @@
 <mat-horizontal-stepper linear #stepper>
     <!-- TODO: add linear stuff to stepper (formgroup und so zuig) -->
 
-    <mat-step label="Übernachtungsdetails">
+    <mat-step linear label="Übernachtungsdetails">
         <h2>Übernachtungsdetails</h2>
         <form>
 
             <mat-form-field>
                 <mat-label>Ankunft</mat-label>
-                <input matInput [(ngModel)]="sendObj.an" name="an" [matDatepicker]="dpAn" required>
+                <input matInput [(ngModel)]="sendObj.to" name="an" [matDatepicker]="dpAn" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAn"></mat-datepicker-toggle>
                 <mat-datepicker #dpAn></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Abfahrt</mat-label>
-                <input matInput [(ngModel)]="sendObj.ab" name="ab" [matDatepicker]="dpAb" required>
+                <input matInput [(ngModel)]="sendObj.from" name="ab" [matDatepicker]="dpAb" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAb"></mat-datepicker-toggle>
                 <mat-datepicker #dpAb></mat-datepicker>
-            </mat-form-field>     
+            </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Übernachtungsart</mat-label>
@@ -30,27 +30,25 @@
 
             <mat-form-field class="example-chip-list">
                 <mat-chip-list #zimmerChips aria-label="Zimmer auswählen">
-                  <mat-chip *ngFor="let z of sendObj.zimmerNr" [selectable]="true"
-                           [removable]="true" (removed)="remove(z)">
-                    {{z}}
-                    <mat-icon matChipRemove>cancel</mat-icon>
-                  </mat-chip>
-                  <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it)
+                    <mat-chip *ngFor="let z of sendObj.zimmerNr" [selectable]="true" [removable]="true"
+                        (removed)="remove(z)">
+                        {{z}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it)
                         TODO: make required kp wie -->
-                  <input placeholder="Zimmer hinzufügen..."
-                         [matChipInputFor]="zimmerChips"
-                         [matChipInputSeparatorKeyCodes]="[13]"
-                         [matChipInputAddOnBlur]="true"
-                         (matChipInputTokenEnd)="add($event)">
+                    <input placeholder="Zimmer hinzufügen..." [matChipInputFor]="zimmerChips"
+                        [matChipInputSeparatorKeyCodes]="[13]" [matChipInputAddOnBlur]="true"
+                        (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
-              </mat-form-field>
-              
+            </mat-form-field>
+
             <div>
                 <button mat-raised-button color="primary" matStepperNext>Weiter</button>
             </div>
         </form>
     </mat-step>
-    <mat-step  label="Personen eintragen">
+    <mat-step linear label="Personen eintragen">
         <h2>Personen eintragen</h2>
         <form>
             <app-personenliste (personenChange)="updatePersonen($event)"></app-personenliste>
@@ -61,19 +59,28 @@
             </div>
         </form>
     </mat-step>
-    <mat-step label="Fertig">
+    <mat-step linear label="Fertig">
         <h2>Fertig</h2>
+        
+        Von: {{formatSqlDate(sendObj.from)}},
+        Bis: {{formatSqlDate(sendObj.to)}},
+        Art: {{sendObj.alloggiato}},
+        Zimmer: {{sendObj.zimmerNr}}
 
-        <p>Hier nochmal alle Daten, Zeiten und Kunden TODO</p>
+        <mat-accordion>
+            <app-dropdownperson *ngFor="let p of sendObj.personen" [person]="p"></app-dropdownperson>
+        </mat-accordion>
 
-        <pre style="text-align: left;">{{sendObj | json}}</pre>
 
         
-
+        <h3 class="error">{{sendObj.error}}</h3>
+        
+        <pre style="text-align: left;">{{sendObj | json}}</pre>
+        
         <div>
             <button mat-button matStepperPrevious>Zurück</button>
-            <button mat-raised-button color="primary" (click)="sendPost()">Bestätigen</button>
+            <button mat-raised-button color="primary" (click)="sendPost()"
+                [disabled]="!sendObj.valid()">Bestätigen</button>
         </div>
     </mat-step>
 </mat-horizontal-stepper>
-  

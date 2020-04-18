@@ -12,13 +12,6 @@ import { Person } from 'src/shared/person';
 export class PersoneneingabeComponent implements OnInit {
 
   sendObj = new SendObject();
-  an;
-  ab;
-  alloggiato: string;
-  zimmer = [];
-  personen = [];
-
-  test = new Person();
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
@@ -53,36 +46,72 @@ export class PersoneneingabeComponent implements OnInit {
   updatePersonen(update) {
     if (!this.sendObj.personen)
       this.sendObj.personen = [];
-    this.sendObj.personen = update;
+
+    let pers = [];
+    for (const i in update)
+      if (update.hasOwnProperty(i))
+        pers.push(update[i]);
+
+    if (pers.length != 0)
+      this.sendObj.personen = pers;
+    else
+      delete this.sendObj.personen;
   }
 
-  constructor(private api: ApiconnectorService) {}
+  constructor(private api: ApiconnectorService) { }
 
   ngOnInit() {
 
   }
 
   sendPost() {
-    // let postobj = {
-    //   from: this.formatSqlDate(this.ab),
-    //   to: this.formatSqlDate(this.an),
-    //   zimmerNr: this.zimmer,
-    //   alloggiato: this.alloggiato,
-    //   personen: this.personen
-    // }
-    
-    console.log(this.sendObj);
+    if (this.sendObj.valid()) {
 
-    // TODO: validate the shit out of sendobj
-    // TODO: format dates to sqldates with the menthod
-    
-    //this.api.sendPost('http://127.0.0.1:5000/sendPersonen', this.sendobj).subscribe(data => console.log(data));
+      // for (let key in this.sendObj) {
+      //   msg[key] = this.sendObj[key];
+      //   if (this.sendObj[key] instanceof Array) {
+
+      //   }
+      // }
+
+      let clone = (obj) => {
+        let obj2 = Object.create(obj);
+        for (let k in obj) {
+          if (obj[k] instanceof Date) {
+            obj2[k] = this.formatSqlDate(obj[k]);
+          } else {
+            obj2[k] = (obj[k] != null &&  typeof obj[k] === 'object') ? clone(obj[k]) : obj[k];
+          }
+        }
+        return obj2;
+      }
+
+
+      let msg = clone(this.sendObj);
+
+      delete msg.error;
+
+      for (const i in msg) {
+        if (msg[i] instanceof Date)
+          msg[i] = this.formatSqlDate(msg[i]);
+      }
+
+      msg.personen.forEach(p => {
+        p.birthday = this.formatSqlDate(p.birthday)
+      });
+
+      console.log(msg);
+      //this.api.sendPost('http://127.0.0.1:5000/sendPersonen', msg).subscribe(data => console.log(data));
+    }
+
   }
 
-  formatSqlDate(date: Date): string {
-    let m = date.getMonth() + 1;
-    let d = date.getDate();
+  formatSqlDate(date: Date | string): string {
+    if (date instanceof Date) {
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
 
-    return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') +  m + '/' + date.getFullYear();
+      return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') + m + '/' + date.getFullYear();
+    }
   }
 }

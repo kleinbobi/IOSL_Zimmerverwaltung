@@ -47,11 +47,12 @@ export class PersonenlisteComponent {
 
   removePerson(id: string) {
     delete this.personen[id];
+    this.personenChange.emit(this.personen);
   }
 
   resetValidations() {
     setTimeout(() => {
-      let list = document.getElementsByTagName('mat-form-field');
+      let list = document.getElementsByClassName('removeV');
       for (var i = 0; i < list.length; i++) {
         list[i].classList.remove('mat-form-field-invalid')
       }

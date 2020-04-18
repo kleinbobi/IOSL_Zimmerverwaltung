@@ -5,85 +5,84 @@
 <form class="example-form">
   <div class="rowfx">
     <div class="colfx">
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Name</mat-label>
         <input matInput type="text" name="name" [(ngModel)]="currentPerson.name" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Nachname</mat-label>
         <input matInput type="text" name="surname" [(ngModel)]="currentPerson.surname" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Geschlecht</mat-label>
         <input matInput type="text" name="gender" [(ngModel)]="currentPerson.gender" required>
       </mat-form-field>
 
-      <!-- copy datepicker -->
-      <mat-form-field>
-        <mat-label>Gebutstag</mat-label>
-        <input matInput type="text" name="birthday" [(ngModel)]="currentPerson.birthday" required>
+      <mat-form-field class="removeV">
+        <mat-label>Geburtstag</mat-label>
+        <input matInput [(ngModel)]="currentPerson.birthday" name="geb" [matDatepicker]="geb" required>
+        <mat-datepicker-toggle matSuffix [for]="geb"></mat-datepicker-toggle>
+        <mat-datepicker #geb></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field>
+
+      <mat-form-field class="removeV">
         <mat-label>Geburtsland</mat-label>
         <input matInput type="text" name="birthplace" [(ngModel)]="currentPerson.birthplace" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Gebutsgemeinde</mat-label>
         <input matInput type="text" name="birthplaceIt" [(ngModel)]="currentPerson.birthplaceIt" required>
       </mat-form-field>
     </div>
 
     <div class="colfx">
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Wohngemeinde</mat-label>
         <input matInput type="text" name="location" [(ngModel)]="currentPerson.location" required>
       </mat-form-field>
 
-      <!-- make number and restrict maybe -->
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Telefon</mat-label>
-        <input matInput type="text" name="tel" [(ngModel)]="currentPerson.tel" required>
+        <input matInput type="number" name="tel" [(ngModel)]="currentPerson.tel" required>
       </mat-form-field>
 
-      <!-- mail checers? -->
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Mail</mat-label>
-        <input matInput type="text" name="mail" [(ngModel)]="currentPerson.mail" required>
+        <input matInput type="mail" name="mail" [(ngModel)]="currentPerson.mail" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Adresse</mat-label>
         <input matInput type="text" name="address" [(ngModel)]="currentPerson.address" required>
       </mat-form-field>
 
-      <!-- number und max 5 chars -->
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>PLZ</mat-label>
-        <input matInput type="text" name="plz" [(ngModel)]="currentPerson.plz" required>
+        <input matInput name="plz" type="number" [(ngModel)]="currentPerson.plz" required>
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Place</mat-label>
+      <mat-form-field class="removeV">
+        <mat-label>Wohnland</mat-label>
         <input matInput type="text" name="place" [(ngModel)]="currentPerson.place" required>
       </mat-form-field>
     </div>
 
     <div *ngIf="ausweis" class="colfx">
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Ausweisnummer</mat-label>
         <input matInput type="text" name="nr" [(ngModel)]="currentPerson.idcard.nr" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Ausstellungsland</mat-label>
         <input matInput type="text" name="land" [(ngModel)]="currentPerson.idcard.country" required>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="removeV">
         <mat-label>Ausweistyp</mat-label>
         <mat-select name="type" [(ngModel)]="currentPerson.idcard.type" required>
           <mat-option *ngFor="let t of austypes" [value]="t">{{t}}</mat-option>
@@ -97,10 +96,18 @@
 
 <!-- {{currentPerson | json}} -->
 
-<table align="center">
-  <tr *ngFor="let p of personen | keyvalue">
-    <td>{{p.value.name}} {{p.value.surname}}</td>
-    <td><button (click)="editPerson(p.key)" mat-stroked-button color="accent">Edit</button></td>
-    <td><button (click)="removePerson(p.key)" mat-stroked-button color="accent" *ngIf="!editmode">Delete</button></td>
-  </tr>
-</table>
+<mat-accordion>
+  <div id="cont">
+    <table>
+      <tr *ngFor="let p of personen | keyvalue">
+        <td>
+          <app-dropdownperson [person]="p.value"></app-dropdownperson>
+        </td>
+        <td>
+          <button (click)="editPerson(p.key)" mat-stroked-button color="accent">Edit</button>
+          <button (click)="removePerson(p.key)" mat-stroked-button color="accent" *ngIf="!editmode">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</mat-accordion>

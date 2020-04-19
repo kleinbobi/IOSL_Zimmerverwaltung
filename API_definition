@@ -6,6 +6,9 @@
 /login : token ?
     Login und Authentifikation
 
+/getBuchungen
+    Return list of buchungen from date to date
+
 
 # GET #
 

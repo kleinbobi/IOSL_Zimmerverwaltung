@@ -7,14 +7,14 @@
 
             <mat-form-field>
                 <mat-label>Ankunft</mat-label>
-                <input matInput [(ngModel)]="sendObj.to" name="an" [matDatepicker]="dpAn" required>
+                <input matInput [(ngModel)]="sendObj.from" name="an" [matDatepicker]="dpAn" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAn"></mat-datepicker-toggle>
                 <mat-datepicker #dpAn></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Abfahrt</mat-label>
-                <input matInput [(ngModel)]="sendObj.from" name="ab" [matDatepicker]="dpAb" required>
+                <input matInput [(ngModel)]="sendObj.to" name="ab" [matDatepicker]="dpAb" required>
                 <mat-datepicker-toggle matSuffix [for]="dpAb"></mat-datepicker-toggle>
                 <mat-datepicker #dpAb></mat-datepicker>
             </mat-form-field>
@@ -62,7 +62,7 @@
     <mat-step linear label="Fertig">
         <h2>Fertig</h2>
         
-        Von: {{formatSqlDate(sendObj.from)}},
+        Von: {{formatSqlDate(sendObj.from)}}<p *ngIf="!sendObj.from" class="error">From is missing</p>,
         Bis: {{formatSqlDate(sendObj.to)}},
         Art: {{sendObj.alloggiato}},
         Zimmer: {{sendObj.zimmerNr}}

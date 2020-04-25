@@ -10,7 +10,7 @@ import { Person } from 'src/shared/person';
   styleUrls: ['./personeneingabe.component.sass']
 })
 export class PersoneneingabeComponent implements OnInit {
-
+  reterror: any;
   sendObj = new SendObject();
 
   add(event: MatChipInputEvent): void {
@@ -67,13 +67,6 @@ export class PersoneneingabeComponent implements OnInit {
   sendPost() {
     if (this.sendObj.valid()) {
 
-      // for (let key in this.sendObj) {
-      //   msg[key] = this.sendObj[key];
-      //   if (this.sendObj[key] instanceof Array) {
-
-      //   }
-      // }
-
       let clone = (obj) => {
         let obj2 = Object.create(obj);
         for (let k in obj) {
@@ -86,10 +79,8 @@ export class PersoneneingabeComponent implements OnInit {
         return obj2;
       }
 
-
       let msg = clone(this.sendObj);
-
-      delete msg.error;
+      this.reterror = null;
 
       for (const i in msg) {
         if (msg[i] instanceof Date)
@@ -101,17 +92,18 @@ export class PersoneneingabeComponent implements OnInit {
       });
 
       console.log(msg);
-      //this.api.sendPost('http://127.0.0.1:5000/sendPersonen', msg).subscribe(data => console.log(data));
+      this.api.sendPost('http://127.0.0.1:5000/sendPersonen', msg).subscribe(data => console.log(data), err => this.reterror = err);
     }
 
   }
 
-  formatSqlDate(date: Date | string): string {
+  formatSqlDate(date: Date | string): string {    
     if (date instanceof Date) {
       let m = date.getMonth() + 1;
       let d = date.getDate();
 
       return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') + m + '/' + date.getFullYear();
     }
+    return date;
   }
 }

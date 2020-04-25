@@ -14,4 +14,14 @@ export class DropdownpersonComponent implements OnInit {
   ngOnInit() {
   }
 
+  formatSqlDate(date: Date | string): string {    
+    if (date instanceof Date) {
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
+
+      return (d < 10 ? '0' : '') + d + '/' + (m < 10 ? '0' : '') + m + '/' + date.getFullYear();
+    }
+    return date;
+  }
+
 }

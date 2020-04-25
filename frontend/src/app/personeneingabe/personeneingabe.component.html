@@ -34,8 +34,7 @@
                         {{z}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
-                    <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it)
-                        TODO: make required kp wie -->
+                    <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it) -->
                     <input placeholder="Zimmer hinzufügen..." [matChipInputFor]="zimmerChips"
                         [matChipInputSeparatorKeyCodes]="[13]" [matChipInputAddOnBlur]="true"
                         (matChipInputTokenEnd)="add($event)">
@@ -60,21 +59,24 @@
     </mat-step>
     <mat-step linear label="Fertig">
         <h2>Fertig</h2>
-        
-        Von: {{formatSqlDate(sendObj.from)}}<p *ngIf="!sendObj.from" class="error">From is missing</p>,
-        Bis: {{formatSqlDate(sendObj.to)}},
-        Art: {{sendObj.alloggiato}},
-        Zimmer: {{sendObj.zimmerNr}}
 
+        <h3>Übernachtungsdetails</h3>
+        
+        Von: {{formatSqlDate(sendObj.from)}}<span *ngIf="!sendObj.from" class="error">Keine Angabe</span>,
+        Bis: {{formatSqlDate(sendObj.to)}}<span *ngIf="!sendObj.to" class="error">Keine Angabe</span>,
+        Art: {{sendObj.alloggiato}}<span *ngIf="!sendObj.alloggiato" class="error">Keine Angabe</span>,
+        Zimmer: <span *ngFor="let z of sendObj.zimmerNr">{{z}} </span><span *ngIf="!sendObj.zimmerNr" class="error">Keine Angabe</span>
+
+        <h3>Personen</h3>
+
+        <span *ngIf="!sendObj.personen" class="error">Keine Angabe</span>
         <mat-accordion>
             <app-dropdownperson *ngFor="let p of sendObj.personen" [person]="p"></app-dropdownperson>
         </mat-accordion>
 
-
+        <h3 class="error">{{reterror ? (reterror?.message | json) : ''}}</h3>
         
-        <h3 class="error">{{sendObj.error}}</h3>
-        
-        <pre style="text-align: left;">{{sendObj | json}}</pre>
+        <!-- <pre style="text-align: left;">{{sendObj | json}}</pre> -->
         
         <div>
             <button mat-button matStepperPrevious>Zurück</button>

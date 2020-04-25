@@ -123,3 +123,17 @@ create table stati
     Datainizio  varchar(40) null,
     DataFine    varchar(40) null
 );
+
+create table user
+(
+	username varchar(50) not null,
+	passhash varchar(200) not null
+);
+
+create unique index user_username_uindex
+	on user (username);
+
+alter table user
+	add constraint user_pk
+		primary key (username);
+

@@ -1,9 +1,8 @@
 import os
-from flask import Flask, render_template, session
-from flask import request
+from flask import Flask, render_template, session, request
 from DBManager import DBmanager
 from flask_cors import CORS
-
+from flask_api import status
 app = Flask(__name__)
 CORS(app)
 database = DBmanager()
@@ -17,7 +16,7 @@ def home():
 
 @app.route('/test', methods=['GET'])
 def yeet():
-    return "Hoi2"
+    return "Hoi2", status.HTTP_200_OK
 
 
 @app.route('/sendPersonen', methods=['POST'])
@@ -43,15 +42,15 @@ def login():
         :return 0 wenn erfolgreich -1 wenn nicht
     """
     json = request.get_json()
-    if json['password'] == 'password' and json['username'] == 'admin':
+    if DBmanager.checkuser(json['username'], json['password']):
         session['logged_in'] = True
         print("eingelogt")
         return '0'
     else:
-        return '-1'
+        return '1', status.HTTP
 
 
-@app.route("/logout", methods=['POST'])
+@app.route("/logout", methods=['POST'])#TODO Login richt mit DB
 def logout():
     session['logged_in'] = False
     return '1'
@@ -92,14 +91,28 @@ def getdocumento():
 
 
 @app.route('/makeBuchung', methods=['POST'])
-def makeBuchung():
+def makebuchung():
     """
 
     :return:
     """
     json = request.get_json()
+    return '1'
+
+
+@app.route('/getBuchungen', methods=['POST'])
+def getbungungenapi():
+    """
+
+    :return:
+    """
+    ret = []
+    json = request.get_json()
+   # DBmanager.getbuchungen(json)
+
+    return '1', status.HTTP_200_OK
 
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
-    app.run(host='127.0.0.1')
+    app.run(host='127.0.0.1', debug=True)

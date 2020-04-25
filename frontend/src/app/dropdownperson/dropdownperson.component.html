@@ -4,9 +4,26 @@
         {{person.name}} {{person.surname}}
       </mat-panel-title>
       <mat-panel-description>
-        {{person.birthday}}
+        {{formatSqlDate(person.birthday)}}
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    This is inside
+    {{person.birthplace}}
+    {{person.birthplaceIt}}
+    {{person.location}}<br>
+
+    {{person.tel}}
+    {{person.mail}}<br>
+
+    {{person.address}}
+    {{person.plz}}
+    {{person.place}}<br>
+
+    <div *ngIf="person.idcard">
+      {{person.idcard.nr}}
+      {{person.idcard.country}}
+      {{person.idcard.type}}
+    </div>
+
+
   </mat-expansion-panel>

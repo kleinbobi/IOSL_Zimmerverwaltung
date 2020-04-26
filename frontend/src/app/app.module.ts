@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PersonenlisteComponent } from './personenliste/personenliste.component';
 import { DropdownpersonComponent } from './dropdownperson/dropdownperson.component';
+import { BuchungenanzeigeComponent } from './buchungenanzeige/buchungenanzeige.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { DropdownpersonComponent } from './dropdownperson/dropdownperson.compone
     LoginComponent,
     PersoneneingabeComponent,
     PersonenlisteComponent,
-    DropdownpersonComponent
+    DropdownpersonComponent,
+    BuchungenanzeigeComponent
   ],
   imports: [
     HttpClientModule,

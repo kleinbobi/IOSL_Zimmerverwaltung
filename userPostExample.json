@@ -1,4 +1,5 @@
 {
+    "id": null,
     "from": "10/02/2020",
     "to": "12/02/2020",
     "zimmerNr": [
@@ -6,25 +7,6 @@
         "21"
     ],
     "alloggiato": "CAPO GRRUPPO",
-    "ausweisperson": {
-        "name": "Paul",
-        "surname": "Prünster",
-        "gender": "m",
-        "birthday": "11/03/2020",
-        "birthplace": null,
-        "birthPlaceIt": "Bolzano",
-        "location": "Italien",
-        "tel": "3801513777",
-        "mail": "paul.pruenster@gmai.com",
-        "address": "Botengasse 17/A",
-        "plz": "39050",
-        "place": "Jenesien",
-        "idcard": {
-            "nr": "AX4248086",
-            "country": "IT",
-            "type": "IDENT"
-        }
-    },
     "personen": [
         {
             "name": "Aaron",
@@ -40,6 +22,25 @@
             "plz": "39050",
             "place": "Jenesien",
             "idcard": null
+        },
+        {
+            "name": "Paul",
+            "surname": "Prünster",
+            "gender": "m",
+            "birthday": "11/03/2020",
+            "birthplace": null,
+            "birthPlaceIt": "Bolzano",
+            "location": "Italien",
+            "tel": "3801513777",
+            "mail": "paul.pruenster@gmai.com",
+            "address": "Botengasse 17/A",
+            "plz": "39050",
+            "place": "Jenesien",
+            "idcard": {
+                "nr": "AX4248086",
+                "country": "IT",
+                "type": "IDENT"
+            }
         }
     ]
 }

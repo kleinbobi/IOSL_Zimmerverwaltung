@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Person } from '../../shared/person';
 
 @Component({
@@ -9,22 +9,21 @@ import { Person } from '../../shared/person';
 export class PersonenlisteComponent {
   @Output() personenChange = new EventEmitter();
 
-  austypes = [ // TODO: get from api?
+  austypes = [
     'IDENT',
     'TEST'
   ];
 
   ausweis = true;
   currentPerson = new Person();
-  personen: { [key: number]: Person } = {};
+  
+  @Input() personen: Person[] = [];
 
   editmode = false;
-  id_counter = 0;
   addPerson() {
     if (this.currentPerson.valid(this.ausweis)) {
       if (!this.editmode) {
-        // Person an id_counter stelle schreiben und hochzählen
-        this.personen[this.id_counter++] = this.currentPerson;
+        this.personen.push(this.currentPerson);
       } else {
         this.editmode = false;
       }
@@ -45,8 +44,8 @@ export class PersonenlisteComponent {
     this.editmode = true;
   }
 
-  removePerson(id: string) {
-    delete this.personen[id];
+  removePerson(id: number) {
+    this.personen.splice(id, 1);
     this.personenChange.emit(this.personen);
   }
 

@@ -15,6 +15,11 @@
         <input matInput type="text" name="surname" [(ngModel)]="currentPerson.surname" required>
       </mat-form-field>
 
+      <!-- <mat-radio-group name="gender" [(ngModel)]="currentPerson.gender">
+        <mat-radio-button [value]="m">Mann</mat-radio-button>
+        <mat-radio-button [value]="w">Frau</mat-radio-button>
+      </mat-radio-group> -->
+
       <mat-form-field class="removeV">
         <mat-label>Geschlecht</mat-label>
         <input matInput type="text" name="gender" [(ngModel)]="currentPerson.gender" required>
@@ -99,13 +104,13 @@
 <mat-accordion>
   <div id="cont">
     <table>
-      <tr *ngFor="let p of personen | keyvalue">
+      <tr *ngFor="let p of personen; let i = index">
         <td>
-          <app-dropdownperson [person]="p.value"></app-dropdownperson>
+          <app-dropdownperson [person]="p"></app-dropdownperson>
         </td>
         <td>
-          <button (click)="editPerson(p.key)" mat-stroked-button color="accent">Edit</button>
-          <button (click)="removePerson(p.key)" mat-stroked-button color="accent" *ngIf="!editmode">Delete</button>
+          <button (click)="editPerson(i)" mat-stroked-button color="accent">Edit</button>
+          <button (click)="removePerson(i)" mat-stroked-button color="accent" *ngIf="!editmode">Delete</button>
         </td>
       </tr>
     </table>

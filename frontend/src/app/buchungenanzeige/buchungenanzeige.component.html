@@ -1,0 +1,21 @@
+<button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Buchung</button>
+
+<table align="center" *ngIf="buchungen;else keineB">
+    <tr *ngFor="let b of buchungen; let i = index">
+        <td>
+            {{b.from}} <=> {{b.to}}
+        </td>
+        <td>
+            {{b.personen[0].name}}
+            {{b.personen[0].surname}}
+        </td>
+        <td>
+            <button mat-raised-button (click)="bearbeiten(i)" color="primary">Bearbeiten</button>
+        </td>
+    </tr>
+</table>
+
+<ng-template #keineB>Keine Buchungen (in diesem Zeitraum)</ng-template>
+
+
+<h3 class="error">{{reterror?.message}}</h3>

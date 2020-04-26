@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.formuser = '';
     this.formpass = '';
 
-    this.api.sendPost('http://127.0.0.1:5000/login', creds).subscribe(data => {
+    this.api.login(creds).subscribe(data => {
       if (data === 0) {
         console.log('you are now logged in'); // TODO do the routing stuff
         this.showString = '';
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.api.sendPost('http://127.0.0.1:5000/logout', {}).subscribe(data => {
+    this.api.logout({}).subscribe(data => {
         console.log('you are now logged out'); // TODO do the routing stuff
         this.loggedin = false;
 

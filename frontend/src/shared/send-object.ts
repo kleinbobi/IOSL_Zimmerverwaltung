@@ -1,8 +1,9 @@
 import { Person } from './person';
 
 export class SendObject {
-    from: string;
-    to: string;
+    id: number;
+    from: string | Date;
+    to: string | Date;
     zimmerNr: string[];
     alloggiato: string;
     personen: Person[];

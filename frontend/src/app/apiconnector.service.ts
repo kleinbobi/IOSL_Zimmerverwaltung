@@ -9,7 +9,19 @@ export class ApiconnectorService {
 
   constructor(private http: HttpClient) { }
 
-  sendPost(url: string, obj: {}): Observable<{}> {
-    return this.http.post(url, obj);
+  login(obj: {}): Observable<{}> {
+    return this.http.post('http://127.0.0.1:5000/login', obj);
+  }
+
+  logout(obj: {}): Observable<{}> {
+    return this.http.post('http://127.0.0.1:5000/logout', obj);
+  }
+
+  sendPost(obj: {}): Observable<{}> {
+    return this.http.post('http://127.0.0.1:5000/sendPersonen', obj);
+  }
+
+  getBuchungen(from: Date, to: Date) {
+    return this.http.get('http://127.0.0.1:5000/getBuchungen');
   }
 }

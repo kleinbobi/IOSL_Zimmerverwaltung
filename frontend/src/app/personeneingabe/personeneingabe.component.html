@@ -1,3 +1,5 @@
+<button [routerLink]="['/']" mat-raised-button color="primary">Zurück</button>
+
 <mat-horizontal-stepper linear #stepper>
 
     <mat-step linear label="Übernachtungsdetails">
@@ -49,7 +51,7 @@
     <mat-step linear label="Personen eintragen">
         <h2>Personen eintragen</h2>
         <form>
-            <app-personenliste (personenChange)="updatePersonen($event)"></app-personenliste>
+            <app-personenliste [personen]="sendObj.personen" (personenChange)="updatePersonen($event)"></app-personenliste>
 
             <div>
                 <button mat-button matStepperPrevious>Zurück</button>
@@ -74,7 +76,7 @@
             <app-dropdownperson *ngFor="let p of sendObj.personen" [person]="p"></app-dropdownperson>
         </mat-accordion>
 
-        <h3 class="error">{{reterror ? (reterror?.message | json) : ''}}</h3>
+        <h3 class="error">{{reterror?.message}}</h3>
         
         <!-- <pre style="text-align: left;">{{sendObj | json}}</pre> -->
         

@@ -1,13 +1,13 @@
 import mysql.connector
+import bcrypt
 
 
 class DBmanager:
-	vartest = "hey"
 	db = ""
 
 	def __init__(self):
 		try:
-			self.db = mysql.connector.connect(host="localhost", user="root", passwd="M@rian31", database="IOSL_Hotel_Verwaltung")
+			self.db = mysql.connector.connect(host="localhost", user="root", passwd="SQLPasswd", database="IOSL_Hotel_Verwaltung")####Word change
 		except mysql.connector.Error as error :
 			print("Failed to update record to database rollback: {}".format(error))
 			self.db.close()
@@ -156,7 +156,7 @@ class DBmanager:
 		myresult = cursor.fetchall()
 		return myresult
 
-#########################################################################
+######################################################################### AuthputFile
 
 	def getgruppenfürout(self):
 		cursor = self.db.cursor()
@@ -192,3 +192,54 @@ class DBmanager:
 		cursor = self.db.cursor()
 		cursor.execute('SELECT * FROM ausweis WHERE ausweis_nr = %s', (nr,))
 		return cursor.fetchall()
+
+
+###################################################################### Athentification
+
+	def checkuser(self, username, passwd):
+		ret = False
+		cursor = self.db.cursor()
+		try:
+			cursor.execute('SELECT passhash FROM user WHERE username = %s', (username,))
+			passhash = cursor.fetchall()[0][0]
+		except IndexError:
+			return False
+		except mysql:
+			return False
+		return bcrypt.checkpw(passwd.encode("utf-8"), passhash.encode("utf-8"))
+
+	def createuser(self, username, passwd):
+		"""
+		Mit dieser MEthode wird ein neuer Benutzer in der Datenbank angelegt
+		:param username Benutzename des neuen benutzers:
+		:param passwd Password des neuen Benutzers:
+		:return:>0 id der Geschribenen Reihe
+				-1 nahme bereitzz vergeben
+				-2 DB Error
+		"""
+		ret = 0
+		cursor = self.db.cursor()
+		hashpw = bcrypt.hashpw(passwd.encode("utf-8"), bcrypt.gensalt())
+		try:
+			cursor.execute("INSERT INTO user (username, passhash) VALUES (%s,%s)", (username, hashpw))
+			self.db.commit()
+			ret = cursor.lastrowid
+		except mysql.connector.errors.IntegrityError:
+			ret = -1
+		except mysql:
+			ret = -2
+
+		return ret
+
+
+################################################################################################## gets
+
+	def getbuchungen(self, json):
+		ret = None
+		cursor = self.db.cursor()
+		if json is None:
+			cursor.execute('SELECT * FROM gast WHERE id in (SELECT gastID FROM gruppe_gast WHERE gruppeID in (SELECT gruppeID FROM gruppe WHERE gesendet = FALSE))')
+			ret = cursor.fetchall()
+		else:
+			print("is")
+		return ret

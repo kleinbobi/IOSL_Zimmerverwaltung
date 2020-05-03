@@ -15,11 +15,11 @@ export class PersonenlisteComponent {
   ];
 
   ausweis = true;
+  editmode = false;
   currentPerson = new Person();
   
   @Input() personen: Person[] = [];
 
-  editmode = false;
   addPerson() {
     if (this.currentPerson.valid(this.ausweis)) {
       if (!this.editmode) {

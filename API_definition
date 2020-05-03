@@ -1,7 +1,10 @@
 # POST #
 
-/sendPersonen : {}
+/sendBuchung : {}
     Json mit Personen und Zeiten der unterkunft
+    
+/sendReservierung: {}
+    Json mit reservierung
 
 /login : token ?
     Login und Authentifikation

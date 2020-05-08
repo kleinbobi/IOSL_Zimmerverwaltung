@@ -32,8 +32,6 @@ export class PersonenlisteComponent {
       this.personenChange.emit(this.personen);
       this.currentPerson = new Person();
       this.ausweis = false;
-
-      this.resetValidations();
     }
   }
 
@@ -47,14 +45,5 @@ export class PersonenlisteComponent {
   removePerson(id: number) {
     this.personen.splice(id, 1);
     this.personenChange.emit(this.personen);
-  }
-
-  resetValidations() {
-    setTimeout(() => {
-      let list = document.getElementsByClassName('removeV');
-      for (var i = 0; i < list.length; i++) {
-        list[i].classList.remove('mat-form-field-invalid')
-      }
-    }, 0); // what (une geats net)
   }
 }

@@ -17,8 +17,8 @@ export class ApiconnectorService {
     return this.http.post('http://127.0.0.1:5000/logout', obj);
   }
 
-  sendPost(obj: {}): Observable<{}> {
-    return this.http.post('http://127.0.0.1:5000/sendPersonen', obj);
+  sendBuchung(obj: {}): Observable<{}> {
+    return this.http.post('http://127.0.0.1:5000/sendBuchung', obj);
   }
 
   getBuchungen(from: Date, to: Date) {

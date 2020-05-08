@@ -93,7 +93,7 @@ export class PersoneneingabeComponent implements OnInit {
 
       console.log(msg);
 
-      this.api.sendPost(msg).subscribe(data => console.log(data), err => this.reterror = err);
+      this.api.sendBuchung(msg).subscribe(data => console.log(data), err => this.reterror = err);
     }
 
   }

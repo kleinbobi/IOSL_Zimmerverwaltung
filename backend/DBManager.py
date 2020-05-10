@@ -1,5 +1,6 @@
 import mysql.connector
 import bcrypt
+#from backend.BuchungReturn import BuchungReturn
 
 
 class DBmanager:
@@ -234,7 +235,7 @@ class DBmanager:
 
 ################################################################################################## gets
 
-	def getbuchungen(self, json):
+	def getbuchungenbeta(self, json):
 		ret = None
 		cursor = self.db.cursor()
 		if json is None:
@@ -243,3 +244,28 @@ class DBmanager:
 		else:
 			print("is")
 		return ret
+
+	def getbuchungen(self):
+		ret = []
+		cursor = self.db.cursor()
+		cursor.execute('SELECT * FROM gruppe WHERE gesendet = FALSE')
+		gruppen = cursor.fetchall();
+		print(gruppen[0][0])
+		for gruppe in gruppen:
+			from backend.BuchungReturn import BuchungReturn
+			a = BuchungReturn()
+			a.setgruppe(gruppe)
+			cursor.execute('SELECT * from buchung where buchungid LIKE (select buchung from buchung_gruppe where gruppe LIKE %s)', (gruppe[0],))
+			buchung = cursor.fetchall();
+			a.setbuchung(buchung[0])
+			cursor.execute('SELECT zimmerID FROM buchung_zimmer WHERE buchungid LIKE %s', (buchung[0][0],))
+			zimmer = cursor.fetchall();
+			a.setZimmer(zimmer)
+			cursor.execute("SELECT * FROM gast WHERE id in (SELECT gastID FROM gruppe_gast WHERE gruppeID like %s)", (gruppe[0],))
+			ausweisp = cursor.fetchall()
+			cursor.execute("")
+			a.setpersonen(ausweisp, self)
+			ret.append(a)
+		return ret
+
+

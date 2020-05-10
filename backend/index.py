@@ -1,5 +1,6 @@
+import json
 import os
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify, Response
 from DBManager import DBmanager
 from flask_cors import CORS
 from flask_api import status
@@ -17,6 +18,16 @@ def home():
 @app.route('/test', methods=['GET'])
 def yeet():
     return "Hoi2", status.HTTP_200_OK
+
+
+@app.route('/testBuchung', methods=['GET'])
+def testget():
+    kev = "kevin2"
+    testjj = []
+    ret = database.getbuchungen()
+    for r in ret:
+        testjj.append(r.serialize())
+    return Response(json.dumps(testjj), mimetype='application/json'), status.HTTP_200_OK
 
 
 @app.route('/sendPersonen', methods=['POST'])
@@ -111,6 +122,8 @@ def getbungungenapi():
    # DBmanager.getbuchungen(json)
 
     return '1', status.HTTP_200_OK
+
+
 
 
 if __name__ == '__main__':

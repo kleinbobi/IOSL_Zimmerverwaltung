@@ -17,4 +17,7 @@ DB = DBmanager();
 #print(strechname("",34))
 #print(DB.createuser("admin","password"))
 #print(DB.checkuser("admin", "password"))
-print(DB.getbuchungen(None))
+ret = DB.getbuchungen()
+ok = ret[0].serialize()
+print(ok)
+print(json.dumps([ok]))

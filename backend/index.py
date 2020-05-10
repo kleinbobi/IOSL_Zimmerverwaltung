@@ -20,7 +20,7 @@ def yeet():
     return "Hoi2", status.HTTP_200_OK
 
 
-@app.route('/testBuchung', methods=['GET'])
+@app.route('/getBuchungen', methods=['GET'])
 def testget():
     kev = "kevin2"
     testjj = []

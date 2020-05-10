@@ -1,5 +1,6 @@
+import json
 import os
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify, Response
 from DBManager import DBmanager
 from flask_cors import CORS
 from flask_api import status
@@ -19,7 +20,17 @@ def yeet():
     return "Hoi2", status.HTTP_200_OK
 
 
-@app.route('/sendPersonen', methods=['POST'])
+@app.route('/getBuchungen', methods=['GET'])
+def testget():
+    kev = "kevin2"
+    testjj = []
+    ret = database.getbuchungen()
+    for r in ret:
+        testjj.append(r.serialize())
+    return Response(json.dumps(testjj), mimetype='application/json'), status.HTTP_200_OK
+
+
+@app.route('/sendBuchung', methods=['POST'])
 def sendPersonen():
     """Diese Methode empfängt ein JSON mit den Personen dem Ankfuntfs und abfhartsdatum und mindestens einem Ausweis
     :return: Json wenn erfolgreich, -1 wenn SQL fehlgeschlagen, wenn -2 wenn Authentification nicht in session
@@ -98,19 +109,6 @@ def makebuchung():
     """
     json = request.get_json()
     return '1'
-
-
-@app.route('/getBuchungen', methods=['POST'])
-def getbungungenapi():
-    """
-
-    :return:
-    """
-    ret = []
-    json = request.get_json()
-   # DBmanager.getbuchungen(json)
-
-    return '1', status.HTTP_200_OK
 
 
 if __name__ == '__main__':

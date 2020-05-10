@@ -58,7 +58,7 @@ def generateoutput(dbmanager):
 				dagobert += strechname(id[0][0], 20)
 				#9 caracter land comune
 				r = dbmanager.getcomuni(id[0][2])
-				if r is None: #hier könnte fehler sein
+				if r is None: #hier könnte fehler sein da es sein kann das land und gemeinde selben nahmen hben testen!!!
 					r=dbmanager.getstati(id[0][2])
 				dagobert += str(r[0][0])
 

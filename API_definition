@@ -9,9 +9,6 @@
 /login : token ?
     Login und Authentifikation
 
-/getBuchungen
-    Return list of buchungen from date to date
-
 
 # GET #
 
@@ -26,3 +23,6 @@
 
 /getRooms
     Json mir den freien und den besetzten Räumen
+    
+/getBuchungen
+    Return list of buchungen from date to date

@@ -22,7 +22,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { LoginComponent } from './login/login.component';
 import { PersoneneingabeComponent } from './personeneingabe/personeneingabe.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonenlisteComponent } from './personenliste/personenliste.component';
 import { DropdownpersonComponent } from './dropdownperson/dropdownperson.component';
 import { BuchungenanzeigeComponent } from './buchungenanzeige/buchungenanzeige.component';
@@ -39,6 +39,7 @@ import { BuchungenanzeigeComponent } from './buchungenanzeige/buchungenanzeige.c
   imports: [
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
 
     MatSliderModule,
     MatSelectModule,

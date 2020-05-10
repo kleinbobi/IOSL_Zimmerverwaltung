@@ -1,105 +1,100 @@
-<!-- {{personen | json}} -->
+<mat-slide-toggle (change)="changeValidations()" [disabled]="editmode != null" [(ngModel)]="ausweis">Ausweis
+</mat-slide-toggle>
 
-<mat-slide-toggle (change)="resetValidations()" [disabled]="editmode" [(ngModel)]="ausweis">Ausweis</mat-slide-toggle>
-
-<form class="example-form">
+<form [formGroup]="personenForm">
   <div class="rowfx">
     <div class="colfx">
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput type="text" name="name" [(ngModel)]="currentPerson.name" required>
+        <input matInput type="text" formControlName="name">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Nachname</mat-label>
-        <input matInput type="text" name="surname" [(ngModel)]="currentPerson.surname" required>
+        <input matInput type="text" formControlName="surname">
       </mat-form-field>
 
-      <!-- <mat-radio-group name="gender" [(ngModel)]="currentPerson.gender">
-        <mat-radio-button [value]="m">Mann</mat-radio-button>
-        <mat-radio-button [value]="w">Frau</mat-radio-button>
-      </mat-radio-group> -->
+      <mat-radio-group formControlName="gender">
+        <mat-radio-button value="m">Mann</mat-radio-button>
+        <mat-radio-button  value="w">Frau</mat-radio-button>
+      </mat-radio-group>
 
-      <mat-form-field class="removeV">
-        <mat-label>Geschlecht</mat-label>
-        <input matInput type="text" name="gender" [(ngModel)]="currentPerson.gender" required>
-      </mat-form-field>
-
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Geburtstag</mat-label>
-        <input matInput [(ngModel)]="currentPerson.birthday" name="geb" [matDatepicker]="geb" required>
+        <input matInput [matDatepicker]="geb" formControlName="birthday">
         <mat-datepicker-toggle matSuffix [for]="geb"></mat-datepicker-toggle>
         <mat-datepicker #geb></mat-datepicker>
       </mat-form-field>
 
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Geburtsland</mat-label>
-        <input matInput type="text" name="birthplace" [(ngModel)]="currentPerson.birthplace" required>
+        <input matInput type="text" formControlName="birthplace">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Gebutsgemeinde</mat-label>
-        <input matInput type="text" name="birthplaceIt" [(ngModel)]="currentPerson.birthplaceIt" required>
+        <input matInput type="text" formControlName="birthplaceIt">
       </mat-form-field>
     </div>
 
     <div class="colfx">
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Wohngemeinde</mat-label>
-        <input matInput type="text" name="location" [(ngModel)]="currentPerson.location" required>
+        <input matInput type="text" formControlName="location">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Telefon</mat-label>
-        <input matInput type="number" name="tel" [(ngModel)]="currentPerson.tel" required>
+        <input matInput type="number" formControlName="tel">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Mail</mat-label>
-        <input matInput type="mail" name="mail" [(ngModel)]="currentPerson.mail" required>
+        <input matInput type="mail" formControlName="mail">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Adresse</mat-label>
-        <input matInput type="text" name="address" [(ngModel)]="currentPerson.address" required>
+        <input matInput type="text" formControlName="address">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>PLZ</mat-label>
-        <input matInput name="plz" type="number" [(ngModel)]="currentPerson.plz" required>
+        <input matInput type="number" formControlName="plz">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Wohnland</mat-label>
-        <input matInput type="text" name="place" [(ngModel)]="currentPerson.place" required>
+        <input matInput type="text" formControlName="place">
       </mat-form-field>
     </div>
 
-    <div *ngIf="ausweis" class="colfx">
-      <mat-form-field class="removeV">
+    <div *ngIf="ausweis" class="colfx" formGroupName="idcard">
+      <mat-form-field>
         <mat-label>Ausweisnummer</mat-label>
-        <input matInput type="text" name="nr" [(ngModel)]="currentPerson.idcard.nr" required>
+        <input matInput type="text" formControlName="nr">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Ausstellungsland</mat-label>
-        <input matInput type="text" name="land" [(ngModel)]="currentPerson.idcard.country" required>
+        <input matInput type="text" formControlName="country">
       </mat-form-field>
 
-      <mat-form-field class="removeV">
+      <mat-form-field>
         <mat-label>Ausweistyp</mat-label>
-        <mat-select name="type" [(ngModel)]="currentPerson.idcard.type" required>
+        <mat-select formControlName="type">
           <mat-option *ngFor="let t of austypes" [value]="t">{{t}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 
-  <button type="submit" (click)="addPerson()" mat-raised-button color="accent">{{editmode ? 'Save' : 'Add'}}</button>
+  <button type="button" [disabled]="!personenForm.valid" (click)="addPerson()" mat-raised-button
+    color="accent">{{editmode != null ? 'Save' : 'Add'}}</button>
 </form>
 
-<!-- {{currentPerson | json}} -->
+<!-- {{personen | json}} -->
 
 <mat-accordion>
   <div id="cont">
@@ -109,8 +104,9 @@
           <app-dropdownperson [person]="p"></app-dropdownperson>
         </td>
         <td>
-          <button (click)="editPerson(i)" mat-stroked-button color="accent">Edit</button>
-          <button (click)="removePerson(i)" mat-stroked-button color="accent" *ngIf="!editmode">Delete</button>
+          <button (click)="editPerson(i)" mat-stroked-button color="accent" [disabled]="editmode != null">Edit</button>
+          <button (click)="removePerson(i)" mat-stroked-button color="accent"
+            [disabled]="editmode != null">Delete</button>
         </td>
       </tr>
     </table>

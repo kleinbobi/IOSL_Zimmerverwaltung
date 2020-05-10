@@ -64,10 +64,10 @@
 
         <h3>Übernachtungsdetails</h3>
         
-        Von: {{formatSqlDate(sendObj.from)}}<span *ngIf="!sendObj.from" class="error">Keine Angabe</span>,
-        Bis: {{formatSqlDate(sendObj.to)}}<span *ngIf="!sendObj.to" class="error">Keine Angabe</span>,
-        Art: {{sendObj.alloggiato}}<span *ngIf="!sendObj.alloggiato" class="error">Keine Angabe</span>,
-        Zimmer: <span *ngFor="let z of sendObj.zimmerNr">{{z}} </span><span *ngIf="!sendObj.zimmerNr" class="error">Keine Angabe</span>
+        Von: {{formatSqlDate(sendObj.from)}}<span *ngIf="!sendObj.from" class="error">Keine Angabe</span>,<br>
+        Bis: {{formatSqlDate(sendObj.to)}}<span *ngIf="!sendObj.to" class="error">Keine Angabe</span>,<br>
+        Art: {{sendObj.alloggiato}}<span *ngIf="!sendObj.alloggiato" class="error">Keine Angabe</span>,<br>
+        Zimmer: <span *ngFor="let z of sendObj.zimmerNr; let i = index">{{i != 0 ? ',' : ''}} {{z}}</span><span *ngIf="!sendObj.zimmerNr" class="error">Keine Angabe</span>
 
         <h3>Personen</h3>
 

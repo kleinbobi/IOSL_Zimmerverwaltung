@@ -1,4 +1,8 @@
-<button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Buchung</button>
+<div id="top">
+    <button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Buchung</button>
+    <button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Reservierung</button>
+    <button mat-raised-button color="primary">Download Alloggi</button>
+</div>
 
 <table align="center" *ngIf="buchungen;else keineB">
     <tr *ngFor="let b of buchungen; let i = index">

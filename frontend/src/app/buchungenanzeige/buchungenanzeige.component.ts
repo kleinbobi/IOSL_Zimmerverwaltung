@@ -27,7 +27,7 @@ export class BuchungenanzeigeComponent implements OnInit {
           gender: "m",
           birthday: "11/03/2020",
           birthplace: "Germania",
-          birthplaceIt: null,
+          birthplaceIt: "null",
           location: "Italien",
           tel: "3801513777",
           mail: "paul.pruenster@gmai.com",

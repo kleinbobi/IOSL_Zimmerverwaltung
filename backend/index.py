@@ -111,21 +111,6 @@ def makebuchung():
     return '1'
 
 
-@app.route('/getBuchungen', methods=['POST'])
-def getbungungenapi():
-    """
-
-    :return:
-    """
-    ret = []
-    json = request.get_json()
-   # DBmanager.getbuchungen(json)
-
-    return '1', status.HTTP_200_OK
-
-
-
-
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.run(host='127.0.0.1', debug=True)

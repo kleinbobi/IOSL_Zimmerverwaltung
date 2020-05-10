@@ -89,11 +89,12 @@ export class PersoneneingabeComponent implements OnInit {
 
       if (!msg.id) {
         msg.id = null;
+        this.api.sendBuchung(msg).subscribe(data => console.log(data), err => this.reterror = err);
+      } else {
+        this.api.updateBuchung(msg).subscribe(data => console.log(data), err => this.reterror = err);
       }
 
       console.log(msg);
-
-      this.api.sendBuchung(msg).subscribe(data => console.log(data), err => this.reterror = err);
     }
 
   }

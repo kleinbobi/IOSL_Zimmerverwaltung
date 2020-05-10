@@ -30,7 +30,7 @@ def testget():
     return Response(json.dumps(testjj), mimetype='application/json'), status.HTTP_200_OK
 
 
-@app.route('/sendPersonen', methods=['POST'])
+@app.route('/sendBuchung', methods=['POST'])
 def sendPersonen():
     """Diese Methode empfängt ein JSON mit den Personen dem Ankfuntfs und abfhartsdatum und mindestens einem Ausweis
     :return: Json wenn erfolgreich, -1 wenn SQL fehlgeschlagen, wenn -2 wenn Authentification nicht in session

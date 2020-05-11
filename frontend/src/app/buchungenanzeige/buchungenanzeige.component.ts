@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class BuchungenanzeigeComponent implements OnInit {
 
   reterror: string;
-  buchungen = [
+  buchungen ;/* = [
     {
       id: null,
       from: "10/02/2020",
@@ -103,13 +103,13 @@ export class BuchungenanzeigeComponent implements OnInit {
         }
       ]
     }
-  ];
+  ];*/
 
   constructor(private acs: ApiconnectorService, private router: Router) { }
 
   ngOnInit() {
     this.acs.getBuchungen(null, null).subscribe(data => {
-      this.buchungen = data['buchungen'];
+      this.buchungen = data;
     }, err => this.reterror = err);
   }
 

@@ -15,6 +15,9 @@ class BuchungReturn:
 	personen = []
 	personenjson = []
 
+	def __init__(self):
+		return None
+
 	def setgruppe(self, grupequery):
 		if grupequery[1] == 0:
 			self.alloggiato = "CAPO GRRUPPO"
@@ -27,12 +30,13 @@ class BuchungReturn:
 		self.to = buchungquery[2]
 
 	def setZimmer(self, zimmer):
+		self.zimmerNr = []
 		for z in zimmer:
 			self.zimmerNr.append(z[0])
 
 
 	def setpersonen(self, personen, db):#könnet mit einer Factory oder(begrif vergessen) so besser sein
-
+		self.personen = []
 		for ausweisp in personen:
 			print(ausweisp[6])
 			if ausweisp[6] is not None:
@@ -42,9 +46,10 @@ class BuchungReturn:
 				self.personen.append(p)
 			else:
 				self.personen.append(Person(ausweisp[1], ausweisp[2], ausweisp[3], ausweisp[4], ausweisp[7], ausweisp[5], ausweisp[9], ausweisp[8], ausweisp[10], ausweisp[11], ausweisp[12], ausweisp[13] ))
-		self.personenjson = self.createperlist()
+
 	def createperlist(self):
 		ret = []
+		print("Anzal perwsonen" + str(len(self.personen)))
 		for p in self.personen:
 			ret.append(p.serialize())
 		return ret

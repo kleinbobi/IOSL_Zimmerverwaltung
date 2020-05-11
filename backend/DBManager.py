@@ -9,7 +9,7 @@ class DBmanager:
 	def __init__(self):
 		try:
 			self.db = mysql.connector.connect(host="localhost", user="root", passwd="SQLPasswd", database="IOSL_Hotel_Verwaltung")####Word change
-		except mysql.connector.Error as error :
+		except mysql.connector.Error as error:
 			print("Failed to update record to database rollback: {}".format(error))
 			self.db.close()
 
@@ -18,7 +18,7 @@ class DBmanager:
 
 ################################################################################################
 
-	def creategruppe(self, cursor, json):
+	def creategruppe(self, cursor, buchung):
 		"""
 		Diese Methode Erstellt eine Gruppe für das Abspeichern der Gäste
 		:param json: Das json das den name enthält alloggiato
@@ -26,7 +26,8 @@ class DBmanager:
 		:return: GruppenID
 		"""
 		s = 1
-		if json['alloggiato'] == 'CAPO GRRUPPO':
+		print(buchung)
+		if buchung['alloggiato'] == 'CAPO GRRUPPO':
 			s = 0
 		cursor.execute("INSERT INTO gruppe(gruppeID, familie) VALUES (NULL , %s)", (s,))
 		return cursor.lastrowid
@@ -39,7 +40,7 @@ class DBmanager:
 		:param ausweis: Ausweis id der in die AusweisTable geschrieben wurde
 		:return: id der Person
 		"""
-		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender, geburtsortIT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['location'], person['address'], person['plz'], person['place'], person['gender'], person['birthPlaceIt']))
+		cursor.execute("INSERT INTO gast (vorname,nachname,geburtdatum,geburtsort,tel,ausweis,email,wohnland,str,plz,wohnort, gender, geburtsortIT) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", (person['name'], person['surname'], person['birthday'], person['birthplace'], person['tel'], ausweis, person['mail'], person['location'], person['address'], person['plz'], person['place'], person['gender'], person['birthplaceIt']))
 		return cursor.lastrowid
 
 	def savepersongruppe(self, cursor, gid, pidlist):
@@ -75,7 +76,7 @@ class DBmanager:
 		:param gid: gruppen ID
 		:param bid: buchung ID
 		"""
-		cursor.execute("INSERT INTO buchung_gruppe (buchung, gruppe) VALUES (%s,%s)", (gid, bid))
+		cursor.execute("INSERT INTO buchung_gruppe (buchung, gruppe) VALUES (%s,%s)", (bid, gid))
 
 	def savejson(self, json):
 		"""
@@ -246,6 +247,10 @@ class DBmanager:
 		return ret
 
 	def getbuchungen(self):
+		"""
+		Creates list of BuchungenReturn filed wich the Buchungen witch have non been send
+		:return BuchungenReturn[]:
+		"""
 		ret = []
 		cursor = self.db.cursor()
 		cursor.execute('SELECT * FROM gruppe WHERE gesendet = FALSE')
@@ -253,6 +258,7 @@ class DBmanager:
 		print(gruppen[0][0])
 		for gruppe in gruppen:
 			from backend.BuchungReturn import BuchungReturn
+			a = None
 			a = BuchungReturn()
 			a.setgruppe(gruppe)
 			cursor.execute('SELECT * from buchung where buchungid LIKE (select buchung from buchung_gruppe where gruppe LIKE %s)', (gruppe[0],))

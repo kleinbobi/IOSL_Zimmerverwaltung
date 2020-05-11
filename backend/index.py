@@ -37,10 +37,10 @@ def sendPersonen():
     """
     print("OK")
    # if session.get('logged_in'):
-    if request.is_json:
-        print(request.is_json)
-        json = request.get_json()
-    return database.savejson(json)
+
+    buchung = request.get_json()
+    database.savejson(buchung)
+    return "", status.HTTP_200_OK
     #else:
         #return '-2'
 

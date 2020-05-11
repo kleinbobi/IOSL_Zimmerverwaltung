@@ -20,6 +20,9 @@ export class ApiconnectorService {
   sendBuchung(obj: {}): Observable<{}> {
     return this.http.post('http://127.0.0.1:5000/sendBuchung', obj);
   }
+  updateBuchung(obj: {}): Observable<{}> {
+    return this.http.put('http://127.0.0.1:5000/sendBuchung', obj);
+  }
 
   getBuchungen(from: Date, to: Date) {
     return this.http.get('http://127.0.0.1:5000/getBuchungen');

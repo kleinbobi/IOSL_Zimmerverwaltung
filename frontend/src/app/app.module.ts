@@ -26,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonenlisteComponent } from './personenliste/personenliste.component';
 import { DropdownpersonComponent } from './dropdownperson/dropdownperson.component';
 import { BuchungenanzeigeComponent } from './buchungenanzeige/buchungenanzeige.component';
+import { ReservierungComponent } from './reservierung/reservierung.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BuchungenanzeigeComponent } from './buchungenanzeige/buchungenanzeige.c
     PersoneneingabeComponent,
     PersonenlisteComponent,
     DropdownpersonComponent,
-    BuchungenanzeigeComponent
+    BuchungenanzeigeComponent,
+    ReservierungComponent
   ],
   imports: [
     HttpClientModule,

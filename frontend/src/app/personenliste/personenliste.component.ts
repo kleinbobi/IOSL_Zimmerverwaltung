@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { Person } from '../../shared/person';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-personenliste',
@@ -34,12 +34,12 @@ export class PersonenlisteComponent implements OnInit {
       birthday: [null, [Validators.required]],
       birthplace: [null, [Validators.required]],
       birthplaceIt: [null, [Validators.required]],
-      location: [null, [Validators.required]],
-      tel: [null, [Validators.required]],
-      mail: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      plz: [null, [Validators.required]],
-      place: [null, [Validators.required]],
+      location: [null, []],
+      tel: [null, [Validators.pattern('^[0-9]*$')]],
+      mail: [null, []],
+      address: [null, []],
+      plz: [null, [Validators.pattern('^[0-9]*$')]],
+      place: [null, []],
 
       idcard: this.fb.group({
         nr: [null, [Validators.required]],
@@ -47,8 +47,23 @@ export class PersonenlisteComponent implements OnInit {
         type: [null, [Validators.required]]
       })
     });
+
+    
+    this.personenForm.valueChanges.subscribe(val => {
+      // val.birthplace ? this.birthplaceIt.disable() : this.birthplaceIt.enable()
+      // val.birthplaceIt ? this.birthplace.disable() : this.birthplace.enable()
+      // validation disabeling
+    })
+  }
+  get bp() {
+    return this.personenForm.get('birthplace') as FormControl;
+  }
+  get bpi() {
+    return this.personenForm.get('birthplaceIt') as FormControl;
   }
 
+
+  
   addPerson() {
     if (this.personenForm.valid) {
       let val = this.personenForm.value;

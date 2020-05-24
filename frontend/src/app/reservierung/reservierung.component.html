@@ -1,0 +1,40 @@
+<button [routerLink]="['/']" mat-raised-button color="primary">
+    <mat-icon>home</mat-icon>
+    Home
+</button>
+
+<form>
+    <mat-form-field>
+        <mat-label>Ankunft</mat-label>
+        <input matInput [(ngModel)]="sendObj.from" name="an" [matDatepicker]="dpAn" required>
+        <mat-datepicker-toggle matSuffix [for]="dpAn"></mat-datepicker-toggle>
+        <mat-datepicker #dpAn></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Abfahrt</mat-label>
+        <input matInput [(ngModel)]="sendObj.to" name="ab" [matDatepicker]="dpAb" required>
+        <mat-datepicker-toggle matSuffix [for]="dpAb"></mat-datepicker-toggle>
+        <mat-datepicker #dpAb></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Nachname</mat-label>
+        <input matInput type="text" [(ngModel)]="sendObj.name" name="name" required>
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list">
+        <mat-chip-list #zimmerChips aria-label="Zimmer auswählen">
+            <mat-chip *ngFor="let z of sendObj.zimmerNr" [selectable]="true" [removable]="true" (removed)="remove(z)">
+                {{z}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <!-- [matChipInputSeparatorKeyCodes]="[13]" // 13 is the code for ENTER (blocks it) -->
+            <input placeholder="Zimmer hinzufügen..." [matChipInputFor]="zimmerChips"
+                [matChipInputSeparatorKeyCodes]="[13]" [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="send()" [disabled]="!valid()" type="submit">Bestätigen</button>
+</form>

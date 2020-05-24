@@ -1,6 +1,6 @@
 <div id="top">
     <button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Buchung</button>
-    <button [routerLink]="['personeneingabe']" mat-raised-button color="primary">Neue Reservierung</button>
+    <button [routerLink]="['reservierung']" mat-raised-button color="primary">Neue Reservierung</button>
     <button mat-raised-button color="primary">Download Alloggi</button>
 </div>
 
@@ -15,6 +15,7 @@
         </td>
         <td>
             <button mat-raised-button (click)="bearbeiten(i)" color="primary">Bearbeiten</button>
+            <button mat-raised-button (click)="loeschen(i)" color="primary">Löschen</button>
         </td>
     </tr>
 </table>

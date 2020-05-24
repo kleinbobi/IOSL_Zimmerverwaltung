@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiconnectorService } from '../apiconnector.service';
 import { MatChipInputEvent } from '@angular/material';
 import { SendObject } from 'src/shared/send-object';
-import { Person } from 'src/shared/person';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personeneingabe',
@@ -54,7 +53,7 @@ export class PersoneneingabeComponent implements OnInit {
       delete this.sendObj.personen;
   }
 
-  constructor(private api: ApiconnectorService, private route: ActivatedRoute) { }
+  constructor(private api: ApiconnectorService, private router: Router) { }
 
   ngOnInit() {
     delete history.state.navigationId;
@@ -95,6 +94,7 @@ export class PersoneneingabeComponent implements OnInit {
       }
 
       console.log(msg);
+      this.router.navigate(['']);
     }
 
   }
